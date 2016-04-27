@@ -1,0 +1,21 @@
+<resources>
+
+    <string name="task_done">Hotovo</string>
+    <string name="cancel">Zrušit</string>
+
+    <string name="app_date_format">d.M.yyyy</string>
+    <string name="app_time_format">HH:mm</string>
+    <string name="app_datetime_format">d.M.yyyy HH:mm</string>
+
+    <string name="app_name">Heureka Library</string>
+    <string name="nav_books">Knihovna</string>
+    <string name="title">Heureka Library</string>
+    <string name="drawer_open">Zobrazit</string>
+    <string name="drawer_close">Skrýt</string>
+    <string name="search">Vyhledat</string>
+    <string name="not_empty">Políčko musí být vyplněné</string>
+    <string name="detail">Detail:</string>
+    <string name="available">Dostupnost:</string>
+    <string name="info">Kdo má půjčeno:</string>
+
+</resources>

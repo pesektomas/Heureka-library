@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/body_font_padding"
+    android:paddingTop="@dimen/body_font_padding">
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="0dp"
+        android:layout_weight="0.45"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="0dp"
+        android:layout_weight="0.45"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

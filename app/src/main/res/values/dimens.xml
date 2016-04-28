@@ -18,4 +18,6 @@
     <dimen name="book_info_padding">8dp</dimen>
     <dimen name="book_drawable_padding">3dp</dimen>
 
+    <dimen name="book_btn_padding">8dp</dimen>
+
 </resources>

@@ -7,13 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
-import heureka.cz.internal.library.repository.BookAvailable;
 import heureka.cz.internal.library.repository.Holder;
 
 /**
@@ -30,7 +28,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
 
     @Override
     public UsersRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_holder, parent, false);
         return new ViewHolder(view);
     }
 

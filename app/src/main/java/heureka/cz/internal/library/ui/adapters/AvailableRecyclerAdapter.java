@@ -2,7 +2,6 @@ package heureka.cz.internal.library.ui.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class AvailableRecyclerAdapter extends RecyclerView.Adapter<AvailableRecy
 
     @Override
     public AvailableRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.available_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_available, parent, false);
         return new ViewHolder(view);
     }
 

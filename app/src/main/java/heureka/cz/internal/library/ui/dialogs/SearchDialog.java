@@ -1,6 +1,7 @@
 package heureka.cz.internal.library.ui.dialogs;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,10 @@ import android.widget.EditText;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,13 +29,26 @@ import eu.inmite.android.lib.validations.form.FormValidator;
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
 import heureka.cz.internal.library.R;
+import heureka.cz.internal.library.application.CodeCamp;
+import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.ui.BookDetailActivity;
+import heureka.cz.internal.library.ui.MainActivity;
+import retrofit2.Retrofit;
 
 /**
  * Created by tomas on 26.4.16.
  */
 public class SearchDialog extends DialogFragment {
 
+    private static final String TAG = "SearchDialog";
+
     private String code = "";
+
+    @Inject
+    Retrofit retrofit;
+
+    private ApiDescription apiDescription;
 
     @NotEmpty(messageId = R.string.not_empty)
     @Bind(R.id.search_value)
@@ -50,6 +68,25 @@ public class SearchDialog extends DialogFragment {
             return;
         }
 
+        apiDescription.getBook(searchValue.getText().toString(), new ApiDescription.ResponseHandler() {
+            @Override
+            public void onResponse(Object data) {
+                Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(MainActivity.KEY_BOOK_DETAIL, (Book)data);
+                bundle.putBoolean(BookDetailActivity.KEY_CAN_BORROW, true);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure() {
+                Log.d(TAG, "fail");
+            }
+        });
+
+
     }
 
     public SearchDialog() {
@@ -63,7 +100,11 @@ public class SearchDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_search, container);
+
         ButterKnife.bind(this, view);
+        ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
+
+        apiDescription = new ApiDescription(retrofit);
         return view;
     }
 

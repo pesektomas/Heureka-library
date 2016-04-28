@@ -18,7 +18,7 @@ import java.util.List;
 public class Book extends ParcelableModel implements Parcelable {
 
     @Column(name = "book_id")
-    private String bookId;
+    private Integer bookId;
 
     @Column(name = "name")
     private String name;
@@ -41,11 +41,11 @@ public class Book extends ParcelableModel implements Parcelable {
 
     private ArrayList<BookAvailable> available= new ArrayList<>();
 
-    public String getBookId() {
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(String bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 
@@ -121,7 +121,7 @@ public class Book extends ParcelableModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.bookId);
+        dest.writeInt(this.bookId);
         dest.writeString(this.name);
         dest.writeString(this.detailLink);
         dest.writeString(this.lang);
@@ -136,7 +136,7 @@ public class Book extends ParcelableModel implements Parcelable {
     }
 
     protected Book(Parcel in) {
-        this.bookId = in.readString();
+        this.bookId = in.readInt();
         this.name = in.readString();
         this.detailLink = in.readString();
         this.lang = in.readString();

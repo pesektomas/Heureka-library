@@ -5,5 +5,10 @@
         <item
             android:id="@+id/nav_books"
             android:title="@string/nav_books"/>
+
+        <item
+            android:id="@+id/nav_my_books"
+            android:title="@string/nav_my_books"/>
+
     </group>
 </menu>

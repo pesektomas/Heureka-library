@@ -26,9 +26,11 @@ import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
+import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
+import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 
-public class MainActivity extends AppCompatActivity implements BookListFragment.BookDetailOpener {
+public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener {
 
     public static final String TAG = "MainActivity";
     public static final String KEY_BOOK_DETAIL = "book_detail";
@@ -106,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         switch (menuItem) {
             case R.id.nav_books:
                 f = new BookListFragment();
+                break;
+            case R.id.nav_my_books:
+                f = new MyBookListFragment();
                 break;
         }
 

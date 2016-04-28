@@ -18,6 +18,9 @@ public interface ApiInterface {
     @GET(Config.URL_BOOKS)
     Call<ArrayList<Book>> getBooks();
 
+    @GET(Config.URL_BOOKS_MY)
+    Call<ArrayList<Book>> getMyBooks(@Path("user") String user);
+
     @GET(Config.URL_BOOK)
     Call<Book> getBook(@Path("code") String code);
 

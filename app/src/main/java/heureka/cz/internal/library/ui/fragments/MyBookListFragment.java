@@ -27,7 +27,12 @@ import retrofit2.Retrofit;
 /**
  * Created by tomas on 6.4.16.
  */
-public class BookListFragment extends AbstractBookFragment {
+public class MyBookListFragment extends AbstractBookFragment {
+
+    /**
+     * TODO nacist z google?
+     * */
+    private String user = "tomas";
 
     @Nullable
     @Override
@@ -42,7 +47,7 @@ public class BookListFragment extends AbstractBookFragment {
 
     @Override
     protected void callApi() {
-        apiDescription.getBooks(new ApiDescription.ResponseHandler() {
+        apiDescription.getMyBooks(user, new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Log.d(TAG, "load books");

@@ -113,6 +113,26 @@ public class ApiDescription {
         });
     }
 
+    public void reserveBook(Integer bookId, final ResponseHandler responseHandler) {
+        Call<Info> call = apiInterface.reserveBook(bookId);
+
+        call.enqueue(new Callback<Info>() {
+            @Override
+            public void onResponse(Call<Info> call, Response<Info> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Info> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
     public void returnBook(Integer bookId, String place, final ResponseHandler responseHandler) {
         Call<Info> call = apiInterface.returnBook(bookId, place);
 

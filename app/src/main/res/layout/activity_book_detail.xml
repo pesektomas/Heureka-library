@@ -94,7 +94,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/book_btn_padding"
-            android:text="@string/rorrow"
+            android:text="@string/borrow"
+            />
+
+        <Button
+            android:id="@+id/btn_reserve"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/book_btn_padding"
+            android:text="@string/reserve"
             />
 
 

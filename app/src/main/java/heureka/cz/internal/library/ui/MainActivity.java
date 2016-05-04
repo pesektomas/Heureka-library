@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         ab.setDisplayShowTitleEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle("???");
     }
 
     @Override
@@ -179,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         Intent intent = new Intent(this, BookDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_BOOK_DETAIL, book);
+        bundle.putBoolean(BookDetailActivity.KEY_CAN_RESERVE, true);
         intent.putExtras(bundle);
 
         startActivity(intent);

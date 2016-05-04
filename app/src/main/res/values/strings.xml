@@ -22,6 +22,7 @@
     <string name="detail">Detail:</string>
     <string name="available">Dostupnost:</string>
     <string name="info">Kdo má půjčeno:</string>
-    <string name="rorrow">Vypůjčit</string>
+    <string name="borrow">Vypůjčit</string>
+    <string name="reserve">Rezervovat</string>
 
 </resources>

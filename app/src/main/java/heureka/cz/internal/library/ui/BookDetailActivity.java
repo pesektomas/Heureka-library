@@ -33,6 +33,7 @@ import retrofit2.Retrofit;
 public class BookDetailActivity extends AppCompatActivity {
 
     public static final String KEY_CAN_BORROW = "can_borrow";
+    public static final String KEY_CAN_RESERVE = "can_reserve";
 
     private Book bookDetail;
 
@@ -41,6 +42,11 @@ public class BookDetailActivity extends AppCompatActivity {
      * aby nedoslo k vypojceni jine knihy
      * */
     private boolean canBorrow = false;
+
+    /**
+     * zato rezervace kdykoliv jindy
+     * */
+    private boolean canReserve = false;
 
     private ApiDescription apiDescription;
 
@@ -80,6 +86,9 @@ public class BookDetailActivity extends AppCompatActivity {
     @Bind(R.id.btn_borrow)
     Button btnBorrow;
 
+    @Bind(R.id.btn_reserve)
+    Button btnReserve;
+
     @OnClick(R.id.btn_borrow)
     void borrowBook() {
         btnBorrow.setEnabled(false);
@@ -87,6 +96,22 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Object data) {
                 Snackbar.make(coordinator, ((Info)data).getInfo(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure() {
+                btnBorrow.setEnabled(true);
+            }
+        });
+    }
+
+    @OnClick(R.id.btn_reserve)
+    void reserveBook() {
+        btnReserve.setEnabled(false);
+        apiDescription.reserveBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
+            @Override
+            public void onResponse(Object data) {
+                Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
@@ -124,12 +149,14 @@ public class BookDetailActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             bookDetail = getIntent().getExtras().getParcelable(MainActivity.KEY_BOOK_DETAIL);
             canBorrow = getIntent().getExtras().getBoolean(KEY_CAN_BORROW);
+            canReserve = getIntent().getExtras().getBoolean(KEY_CAN_RESERVE);
         }
 
         // nacteni stavu po otoceni obrazovky
         if (savedInstanceState != null) {
             bookDetail = savedInstanceState.getParcelable(MainActivity.KEY_BOOK_DETAIL);
             canBorrow = savedInstanceState.getBoolean(KEY_CAN_BORROW);
+            canReserve = savedInstanceState.getBoolean(KEY_CAN_RESERVE);
         }
 
         apiDescription = new ApiDescription(retrofit);
@@ -147,6 +174,10 @@ public class BookDetailActivity extends AppCompatActivity {
             btnBorrow.getLayoutParams().height = 0;
         }
 
+        if(!canReserve) {
+            btnReserve.getLayoutParams().height = 0;
+        }
+
         initBook();
     }
 
@@ -154,6 +185,8 @@ public class BookDetailActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(MainActivity.KEY_BOOK_DETAIL, bookDetail);
+        outState.putBoolean(KEY_CAN_BORROW, canBorrow);
+        outState.putBoolean(KEY_CAN_RESERVE, canReserve);
     }
 
     private void initBook() {

@@ -24,6 +24,9 @@ public interface ApiInterface {
     @GET(Config.URL_BOOK)
     Call<Book> getBook(@Path("code") String code);
 
+    @POST(Config.URL_RESERVE_BOOK)
+    Call<Info> reserveBook(@Path("id") Integer id);
+
     @POST(Config.URL_BORROW_BOOK)
     Call<Info> borrowBook(@Path("id") Integer id);
 

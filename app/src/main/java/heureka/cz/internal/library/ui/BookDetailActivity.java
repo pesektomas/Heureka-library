@@ -158,7 +158,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     private void initBook() {
         detailName.setText(bookDetail.getName());
-        detailTags.setText(collectionUtils.implode(",", bookDetail.getTags()));
+        detailTags.setText(bookDetail.getTags().size() > 0 ? collectionUtils.implode(",", bookDetail.getTags()) : bookDetail.getDbTags());
         detailLang.setText(bookDetail.getLang());
         detailForm.setText(bookDetail.getForm());
         detailLink.setText(bookDetail.getDetailLink());

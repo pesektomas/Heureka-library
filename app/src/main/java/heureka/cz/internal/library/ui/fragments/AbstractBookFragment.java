@@ -59,6 +59,10 @@ public abstract class AbstractBookFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if(getActivity() instanceof TitleSetter) {
+            ((TitleSetter)getActivity()).setTitle(getTitle());
+        }
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         initAdapter(new ArrayList<Book>());
@@ -71,6 +75,8 @@ public abstract class AbstractBookFragment extends Fragment {
     }
 
     protected abstract void callApi();
+
+    protected abstract int getTitle();
 
     private void initAdapter(ArrayList<Book> books) {
         Log.d(TAG, "set adapter");
@@ -97,6 +103,19 @@ public abstract class AbstractBookFragment extends Fragment {
             public void onItemLongClick(int taskPosition) {
                 Log.d(TAG, "on long click");
             }
+
+            @Override
+            public boolean onBackupClick(int taskPosition) {
+                Log.d(TAG, "backup click");
+                try {
+                    adapter.getBooks().get(taskPosition).setDbTags(collectionUtils.implode(",", adapter.getBooks().get(taskPosition).getTags()));
+                    adapter.getBooks().get(taskPosition).save();
+                    return true;
+                } catch (Exception e) {
+                    Log.w(TAG, e);
+                    return false;
+                }
+            }
         });
     }
 
@@ -109,6 +128,12 @@ public abstract class AbstractBookFragment extends Fragment {
     public interface BookDetailOpener {
 
         public void bookDetail(Book book);
+
+    }
+
+    public interface TitleSetter {
+
+        public void setTitle(int resId);
 
     }
 

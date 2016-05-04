@@ -5,12 +5,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.repository.Book;
@@ -22,6 +27,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
 
     private ArrayList<Book> books;
     private OnTaskItemClickListener listener;
+
 
     private CollectionUtils collectionUtils;
 
@@ -51,7 +57,13 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         holder.name.setText(book.getName());
         holder.lang.setText(book.getLang());
         holder.form.setText(book.getForm());
-        holder.tags.setText(collectionUtils.implode(",", book.getTags()));
+        holder.tags.setText(book.getTags().size() > 0 ? collectionUtils.implode(",", book.getTags()) : book.getDbTags());
+
+        Book saveBook = new Select().from(Book.class).where("book_id = ?", book.getBookId()).executeSingle();
+        holder.doBackup.setEnabled(saveBook == null);
+        if(saveBook != null) {
+            holder.doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
+        }
     }
 
     public ArrayList<Book> getBooks() {
@@ -77,11 +89,25 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         @Bind(R.id.form)
         public TextView form;
 
+        @Bind(R.id.detail_clickable)
+        public LinearLayout detailClicable;
+
+        @Bind(R.id.backup_book)
+        public ImageView doBackup;
+
+        @OnClick(R.id.backup_book)
+        public void doBackup() {
+            if(listener.onBackupClick(getAdapterPosition())) {
+                doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
+            }
+        }
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
+
+            detailClicable.setOnClickListener(this);
+            detailClicable.setOnLongClickListener(this);
         }
 
         @Override
@@ -101,6 +127,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     }
 
     public interface OnTaskItemClickListener {
+        boolean onBackupClick(int taskPosition);
         void onItemClick(int taskPosition);
         void onItemLongClick(int taskPosition);
     }

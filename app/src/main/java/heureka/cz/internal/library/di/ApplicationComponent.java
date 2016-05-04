@@ -25,4 +25,6 @@ public interface ApplicationComponent {
 
     // dialogs
     void inject(SearchDialog searchDialog);
+
+
 }

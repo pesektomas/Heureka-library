@@ -35,6 +35,9 @@ public class Book extends ParcelableModel implements Parcelable {
     @Column(name = "total")
     private Integer total;
 
+    @Column(name = "tags")
+    private String dbTags;
+
     private List<String> tags = new LinkedList<>();
 
     private ArrayList<Holder> holders = new ArrayList<>();
@@ -113,6 +116,13 @@ public class Book extends ParcelableModel implements Parcelable {
         this.available = available;
     }
 
+    public String getDbTags() {
+        return dbTags;
+    }
+
+    public void setDbTags(String dbTags) {
+        this.dbTags = dbTags;
+    }
 
     @Override
     public int describeContents() {
@@ -126,6 +136,7 @@ public class Book extends ParcelableModel implements Parcelable {
         dest.writeString(this.detailLink);
         dest.writeString(this.lang);
         dest.writeString(this.form);
+        dest.writeString(this.dbTags);
         dest.writeValue(this.total);
         dest.writeStringList(this.tags);
         dest.writeTypedList(holders);
@@ -141,6 +152,7 @@ public class Book extends ParcelableModel implements Parcelable {
         this.detailLink = in.readString();
         this.lang = in.readString();
         this.form = in.readString();
+        this.dbTags = in.readString();
         this.total = (Integer) in.readValue(Integer.class.getClassLoader());
         this.tags = in.createStringArrayList();
         this.holders = in.createTypedArrayList(Holder.CREATOR);

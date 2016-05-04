@@ -29,8 +29,9 @@ import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
+import heureka.cz.internal.library.ui.fragments.MySavedBookFragment;
 
-public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener {
+public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
 
     public static final String TAG = "MainActivity";
     public static final String KEY_BOOK_DETAIL = "book_detail";
@@ -88,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-
         // Listener na vybirani menu itemu
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
             case R.id.nav_my_books:
                 f = new MyBookListFragment();
                 break;
+            case R.id.nav_saved_books:
+                f = new MySavedBookFragment();
+                break;
         }
 
         if (f != null) {
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         ab.setDisplayShowTitleEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setTitle("???");
     }
 
     @Override
@@ -144,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.search:
                 FragmentManager fm = getSupportFragmentManager();
@@ -173,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
 
     @Override
     public void bookDetail(Book book) {
-
         Intent intent = new Intent(this, BookDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_BOOK_DETAIL, book);
@@ -181,4 +183,10 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
 
         startActivity(intent);
     }
+
+    @Override
+    public void setTitle(int titleId) {
+        getSupportActionBar().setTitle(titleId);
+    }
+
 }

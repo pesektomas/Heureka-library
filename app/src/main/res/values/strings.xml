@@ -10,6 +10,10 @@
     <string name="app_name">Heureka Library</string>
     <string name="nav_books">Knihovna - Seznam knih</string>
     <string name="nav_my_books">Knihovna - Vypůjčené knihy</string>
+    <string name="nav_saved_books">Knihovna - Uložené knihy</string>
+    <string name="tit_books">Seznam knih</string>
+    <string name="tit_my_books">Vypůjčené knihy</string>
+    <string name="tit_saved_books">Uložené knihy</string>
     <string name="title">Heureka Library</string>
     <string name="drawer_open">Zobrazit</string>
     <string name="drawer_close">Skrýt</string>

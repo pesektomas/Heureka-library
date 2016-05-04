@@ -60,4 +60,9 @@ public class MyBookListFragment extends AbstractBookFragment {
             }
         });
     }
+
+    @Override
+    protected int getTitle() {
+        return R.string.tit_my_books;
+    }
 }

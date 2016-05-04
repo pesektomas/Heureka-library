@@ -14,7 +14,7 @@
         >
 
         <meta-data android:name="AA_DB_NAME" android:value="code_camp.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="5" />
+        <meta-data android:name="AA_DB_VERSION" android:value="7" />
 
         <activity android:name=".ui.MainActivity">
             <intent-filter>

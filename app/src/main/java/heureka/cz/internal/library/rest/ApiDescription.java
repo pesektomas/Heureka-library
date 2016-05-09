@@ -1,8 +1,12 @@
 package heureka.cz.internal.library.rest;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 import retrofit2.Call;
@@ -35,6 +39,7 @@ public class ApiDescription {
 
     public void getBooks(final ResponseHandler responseHandler) {
         Call<ArrayList<Book>> call = apiInterface.getBooks();
+
 
         call.enqueue(new Callback<ArrayList<Book>>() {
             @Override
@@ -151,5 +156,32 @@ public class ApiDescription {
                 responseHandler.onFailure();
             }
         });
+    }
+
+    public void historyOneBook(String bookCode, final ResponseHandler responseHandler){
+        Call<JSONObject> call = apiInterface.oneBookHistory(bookCode);
+        System.out.println("BOOK CODE"+bookCode+"URL"+call.request().url().toString());
+
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+
+
+                    System.out.println("RESPONSE"+response.message()+response.headers().toString());
+
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JSONObject> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+
+        });
+
     }
 }

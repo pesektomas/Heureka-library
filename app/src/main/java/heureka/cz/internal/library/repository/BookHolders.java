@@ -12,4 +12,20 @@ public class BookHolders {
     String date;
     @SerializedName("return")
     String returnB;
+
+    public String getBorrowDate(){
+        return date;
+    }
+
+    public String getReturnDate(){
+        return returnB;
+    }
+
+    public String getName(){
+        return user_name;
+    }
+
+    public String getType(){
+        return type;
+    }
 }

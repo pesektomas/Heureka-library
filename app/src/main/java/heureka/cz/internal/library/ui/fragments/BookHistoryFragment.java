@@ -46,6 +46,8 @@ public class BookHistoryFragment extends Fragment {
     @Bind(R.id.todo_list_view2)
     RecyclerView recyclerView;
 
+    String code= "";
+
     protected ApiDescription apiDescription;
     protected HistoryRecyclerAdapter adapter;
 
@@ -71,11 +73,12 @@ public class BookHistoryFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         initAdapter(new ArrayList<BookHolders>());
+        Bundle bundle = this.getArguments();
+        code = bundle.getString("concreteBook");
         callApi();
 
     }
     protected void callApi() {
-        String code = "22";
 
         apiDescription.historyOneBook(code, new ApiDescription.ResponseHandler() {
             @Override

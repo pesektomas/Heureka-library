@@ -46,6 +46,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 Bundle bundle = new Bundle();
                 bundle.putString("concreteBook","300254123");
                 BookHistoryFragment historieKnihy = new BookHistoryFragment();
+                historieKnihy.setArguments(bundle);
                 return historieKnihy;
         }
         return null;

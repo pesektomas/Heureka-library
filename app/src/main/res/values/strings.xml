@@ -11,6 +11,7 @@
     <string name="nav_books">Knihovna - Seznam knih</string>
     <string name="nav_my_books">Knihovna - Vypůjčené knihy</string>
     <string name="nav_saved_books">Knihovna - Uložené knihy</string>
+    <string name="nav_user_history">Historie uzivatele</string>
     <string name="tit_books">Seznam knih</string>
     <string name="tit_my_books">Vypůjčené knihy</string>
     <string name="tit_saved_books">Uložené knihy</string>
@@ -24,5 +25,7 @@
     <string name="info">Kdo má půjčeno:</string>
     <string name="borrow">Vypůjčit</string>
     <string name="reserve">Rezervovat</string>
+
+
 
 </resources>

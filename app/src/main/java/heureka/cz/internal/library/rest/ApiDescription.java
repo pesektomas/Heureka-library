@@ -72,6 +72,25 @@ public class ApiDescription {
         });
     }
 
+    public void getUserHistory(String user, final ResponseHandler responseHandler) {
+        Call<ArrayList<Book>> call = apiInterface.getUserHistory(user);
+        call.enqueue(new Callback<ArrayList<Book>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
 
     public void getBook(String bookCode, final ResponseHandler responseHandler) {
         Call<Book> call = apiInterface.getBook(bookCode);

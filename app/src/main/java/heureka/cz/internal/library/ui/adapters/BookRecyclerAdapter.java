@@ -62,7 +62,8 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         Book saveBook = new Select().from(Book.class).where("book_id = ?", book.getBookId()).executeSingle();
         holder.doBackup.setEnabled(saveBook == null);
         if(saveBook != null) {
-            holder.doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
+            //holder.doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
+            holder.doBackup.setImageResource(R.drawable.ic_book);
         }
     }
 
@@ -98,7 +99,8 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         @OnClick(R.id.backup_book)
         public void doBackup() {
             if(listener.onBackupClick(getAdapterPosition())) {
-                doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
+                //doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
+                doBackup.setImageResource(R.drawable.ic_book);
             }
         }
 

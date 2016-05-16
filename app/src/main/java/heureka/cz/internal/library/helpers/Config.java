@@ -11,6 +11,8 @@ public class Config {
 
     public static final String URL_BOOKS_MY = "/v1/books/my/{user}";
 
+    public static final String URL_BOOKS_USER = "/v1/book/user-history/{user}";
+
     public static final String URL_BOOK = "/v1/book/{code}";
 
     public static final String URL_BORROW_BOOK = "/v1/book/borrow/{id}";

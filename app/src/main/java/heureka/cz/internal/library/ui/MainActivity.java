@@ -30,6 +30,7 @@ import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.MySavedBookFragment;
+import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 
 public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
 
@@ -114,6 +115,9 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
                 break;
             case R.id.nav_saved_books:
                 f = new MySavedBookFragment();
+                break;
+            case R.id.nav_user_history:
+                f = new UserHistoryFragment();
                 break;
         }
 

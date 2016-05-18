@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -33,6 +34,7 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.BookDetailActivity;
+import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import retrofit2.Retrofit;
 
@@ -71,12 +73,11 @@ public class SearchDialog extends DialogFragment {
         apiDescription.getBook(searchValue.getText().toString(), new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
-                Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+                Intent intent = new Intent(getActivity(), BookDetailAndResActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(MainActivity.KEY_BOOK_DETAIL, (Book)data);
                 bundle.putBoolean(BookDetailActivity.KEY_CAN_BORROW, true);
                 intent.putExtras(bundle);
-
                 startActivity(intent);
             }
 

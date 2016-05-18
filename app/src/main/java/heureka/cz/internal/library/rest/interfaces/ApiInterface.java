@@ -1,9 +1,15 @@
 package heureka.cz.internal.library.rest.interfaces;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -32,4 +38,7 @@ public interface ApiInterface {
 
     @POST(Config.URL_RETURN_BOOK)
     Call<Info> returnBook(@Path("id") Integer id, @Path("place") String place);
+
+    @GET(Config.URL_ONE_BOOK_HISTORY)
+    Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);
 }

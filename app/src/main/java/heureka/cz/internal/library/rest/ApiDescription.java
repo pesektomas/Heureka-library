@@ -1,8 +1,16 @@
 package heureka.cz.internal.library.rest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 import retrofit2.Call;
@@ -35,6 +43,7 @@ public class ApiDescription {
 
     public void getBooks(final ResponseHandler responseHandler) {
         Call<ArrayList<Book>> call = apiInterface.getBooks();
+
 
         call.enqueue(new Callback<ArrayList<Book>>() {
             @Override
@@ -151,5 +160,37 @@ public class ApiDescription {
                 responseHandler.onFailure();
             }
         });
+    }
+
+    public void historyOneBook(String bookCode, final ResponseHandler responseHandler){
+        Call<ArrayList<BookHolders>> call = apiInterface.oneBookHistory(bookCode);
+        System.out.println("BOOK CODE"+bookCode+"URL"+call.request().url().toString());
+
+        call.enqueue(new Callback<ArrayList<BookHolders>>() {
+            @Override
+            public void onResponse(Call<ArrayList<BookHolders>> call, Response<ArrayList<BookHolders>> response) {
+
+
+                    System.out.println("INRESPONSE"+response.message()+response.headers().toString());
+
+                if (response.isSuccessful()) {
+//                    ArrayList al =(ArrayList) response.body();
+System.out.println("SUCESS");
+
+                        System.out.println("RESPONSEBODY"+response.body().toString()+"json");
+
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<BookHolders>> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+
+        });
+
     }
 }

@@ -33,7 +33,6 @@ import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.rest.ApiDescription;
-import heureka.cz.internal.library.ui.BookDetailActivity;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import retrofit2.Retrofit;
@@ -76,7 +75,7 @@ public class SearchDialog extends DialogFragment {
                 Intent intent = new Intent(getActivity(), BookDetailAndResActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(MainActivity.KEY_BOOK_DETAIL, (Book)data);
-                bundle.putBoolean(BookDetailActivity.KEY_CAN_BORROW, true);
+                bundle.putBoolean(BookDetailAndResActivity.KEY_CAN_BORROW, true);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

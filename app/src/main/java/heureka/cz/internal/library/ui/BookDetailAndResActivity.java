@@ -21,6 +21,8 @@ import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 
 public class BookDetailAndResActivity extends AppCompatActivity{
 
+    public static final String KEY_CAN_BORROW = "can_borrow";
+    public static final String KEY_CAN_RESERVE = "can_reserve";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 

@@ -3,7 +3,6 @@ package heureka.cz.internal.library.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import heureka.cz.internal.library.ui.BookDetailActivity;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
@@ -28,7 +27,6 @@ public interface ApplicationComponent {
     void inject(UserHistoryFragment userHistoryFragment);
 
     // activity
-    void inject(BookDetailActivity bookDetailFragment);
     void inject(BookDetailAndResActivity bookDetailAndResActivity);
 
     // dialogs

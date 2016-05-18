@@ -14,28 +14,20 @@ import java.util.List;
  * Created by tomas on 6.4.16.
  */
 
-@Table(name = "book")
-public class Book extends ParcelableModel implements Parcelable {
+public class Book implements Parcelable {
 
-    @Column(name = "book_id")
     private Integer bookId;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "detail_link")
     private String detailLink;
 
-    @Column(name = "lang")
     private String lang;
 
-    @Column(name = "form")
     private String form;
 
-    @Column(name = "total")
     private Integer total;
 
-    @Column(name = "tags")
     private String dbTags;
 
     private List<String> tags = new LinkedList<>();

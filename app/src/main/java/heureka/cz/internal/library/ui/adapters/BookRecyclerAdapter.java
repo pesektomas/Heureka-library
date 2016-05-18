@@ -58,12 +58,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         holder.lang.setText(book.getLang());
         holder.form.setText(book.getForm());
         holder.tags.setText(book.getTags().size() > 0 ? collectionUtils.implode(",", book.getTags()) : book.getDbTags());
-
-        Book saveBook = new Select().from(Book.class).where("book_id = ?", book.getBookId()).executeSingle();
-        holder.doBackup.setEnabled(saveBook == null);
-        if(saveBook != null) {
-            holder.doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
-        }
     }
 
     public ArrayList<Book> getBooks() {
@@ -92,16 +86,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         @Bind(R.id.detail_clickable)
         public LinearLayout detailClicable;
 
-        @Bind(R.id.backup_book)
-        public ImageView doBackup;
-
-        @OnClick(R.id.backup_book)
-        public void doBackup() {
-            if(listener.onBackupClick(getAdapterPosition())) {
-                doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
-            }
-        }
-
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -127,7 +111,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     }
 
     public interface OnTaskItemClickListener {
-        boolean onBackupClick(int taskPosition);
         void onItemClick(int taskPosition);
         void onItemLongClick(int taskPosition);
     }

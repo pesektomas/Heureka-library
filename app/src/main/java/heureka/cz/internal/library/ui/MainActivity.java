@@ -29,7 +29,6 @@ import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
-import heureka.cz.internal.library.ui.fragments.MySavedBookFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 
 public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
@@ -113,9 +112,6 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
             case R.id.nav_my_books:
                 f = new MyBookListFragment();
                 break;
-            case R.id.nav_saved_books:
-                f = new MySavedBookFragment();
-                break;
             case R.id.nav_user_history:
                 f = new UserHistoryFragment();
                 break;
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         Intent intent = new Intent(this, BookDetailAndResActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_BOOK_DETAIL, book);
-        bundle.putBoolean(BookDetailActivity.KEY_CAN_RESERVE, true);
+        bundle.putBoolean(BookDetailAndResActivity.KEY_CAN_RESERVE, true);
         intent.putExtras(bundle);
 
         startActivity(intent);

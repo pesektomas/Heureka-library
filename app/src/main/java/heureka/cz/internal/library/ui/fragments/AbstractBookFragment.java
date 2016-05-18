@@ -103,18 +103,6 @@ public abstract class AbstractBookFragment extends Fragment {
                 Log.d(TAG, "on long click");
             }
 
-            @Override
-            public boolean onBackupClick(int taskPosition) {
-                Log.d(TAG, "backup click");
-                try {
-                    adapter.getBooks().get(taskPosition).setDbTags(collectionUtils.implode(",", adapter.getBooks().get(taskPosition).getTags()));
-                    adapter.getBooks().get(taskPosition).save();
-                    return true;
-                } catch (Exception e) {
-                    Log.w(TAG, e);
-                    return false;
-                }
-            }
         });
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="preferExternal"
     package="heureka.cz.internal.library">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".application.CodeCamp"
+
+
         >
 
         <meta-data android:name="AA_DB_NAME" android:value="code_camp.db" />
@@ -24,6 +27,7 @@
         </activity>
 
         <activity android:name=".ui.BookDetailActivity" />
+        <activity android:name=".ui.BookDetailAndResActivity" />
 
     </application>
 

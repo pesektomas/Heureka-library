@@ -62,7 +62,6 @@ public abstract class AbstractBookFragment extends Fragment {
         if(getActivity() instanceof TitleSetter) {
             ((TitleSetter)getActivity()).setTitle(getTitle());
         }
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         initAdapter(new ArrayList<Book>());

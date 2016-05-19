@@ -21,4 +21,6 @@ public class Config {
 
     public static final String URL_RETURN_BOOK = "/v1/book/return/id/{id}/place/{place}";
 
+    public static final String URL_ONE_BOOK_HISTORY = "/v1/book/history/{code}";
+
 }

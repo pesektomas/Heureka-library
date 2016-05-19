@@ -19,25 +19,26 @@ import butterknife.OnClick;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.BookHolders;
 
 /**
- * Created by tomas on 6.4.16.
+ * Created by Ondrej on 9. 5. 2016.
  */
-public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder> {
+public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<Book> books;
+    private ArrayList<BookHolders> holders;
     private OnTaskItemClickListener listener;
 
 
     private CollectionUtils collectionUtils;
 
-    public BookRecyclerAdapter(@NonNull ArrayList<Book> books, CollectionUtils collectionUtils) {
-        this.books = books;
+    public HistoryRecyclerAdapter(@NonNull ArrayList<BookHolders> holders, CollectionUtils collectionUtils) {
+        this.holders = holders;
         this.collectionUtils = collectionUtils;
     }
 
-    public void setData(@NonNull ArrayList<Book> books) {
-        this.books = books;
+    public void setData(@NonNull ArrayList<BookHolders> holders) {
+        this.holders = holders;
         notifyDataSetChanged();
     }
 
@@ -47,67 +48,46 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history_holder, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Book book = books.get(position);
-        holder.name.setText(book.getName());
-        holder.lang.setText(book.getLang());
-        holder.form.setText(book.getForm());
-        holder.tags.setText(book.getTags().size() > 0 ? collectionUtils.implode(",", book.getTags()) : book.getDbTags());
+        final BookHolders bookHolder = holders.get(position);
+        holder.name.setText(bookHolder.getName());
+        holder.dateBorrow.setText(bookHolder.getBorrowDate());
+        holder.dateReturn.setText(bookHolder.getReturnDate());
 
-        Book saveBook = new Select().from(Book.class).where("book_id = ?", book.getBookId()).executeSingle();
-        holder.doBackup.setEnabled(saveBook == null);
-        if(saveBook != null) {
-            holder.doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
-        }
     }
 
-    public ArrayList<Book> getBooks() {
-        return books;
+    public ArrayList<BookHolders> getHolders() {
+        return holders;
     }
 
     @Override
     public int getItemCount() {
-        return books.size();
+        return holders.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        @Bind(R.id.name)
+        @Bind(R.id.historyUser)
         public TextView name;
 
-        @Bind(R.id.tags)
-        public TextView tags;
+        @Bind(R.id.dateBorrow)
+        public TextView dateBorrow;
 
-        @Bind(R.id.lang)
-        public TextView lang;
+        @Bind(R.id.dateReturn)
+        public TextView dateReturn;
 
-        @Bind(R.id.form)
-        public TextView form;
 
-        @Bind(R.id.detail_clickable)
-        public LinearLayout detailClicable;
-
-        @Bind(R.id.backup_book)
-        public ImageView doBackup;
-
-        @OnClick(R.id.backup_book)
-        public void doBackup() {
-            if(listener.onBackupClick(getAdapterPosition())) {
-                doBackup.setImageResource(R.drawable.ic_backup_blue_grey);
-            }
-        }
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            detailClicable.setOnClickListener(this);
-            detailClicable.setOnLongClickListener(this);
+
         }
 
         @Override

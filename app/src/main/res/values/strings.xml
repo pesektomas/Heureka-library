@@ -24,5 +24,6 @@
     <string name="info">Kdo má půjčeno:</string>
     <string name="borrow">Vypůjčit</string>
     <string name="reserve">Rezervovat</string>
+    <string name="download">Stáhnout</string>
 
 </resources>

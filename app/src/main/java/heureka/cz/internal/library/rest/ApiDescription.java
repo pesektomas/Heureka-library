@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
@@ -192,5 +193,26 @@ System.out.println("SUCESS");
 
         });
 
+    }
+
+    public void getHeurekoviny(final ResponseHandler responseHandler) {
+        Call<ArrayList<Heurekoviny>> call = apiInterface.getHeurekoviny();
+
+        System.out.println("HEUREKOVINY "+"URL"+call.request().url().toString());
+        call.enqueue(new Callback<ArrayList<Heurekoviny>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Heurekoviny>> call, Response<ArrayList<Heurekoviny>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Heurekoviny>> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
     }
 }

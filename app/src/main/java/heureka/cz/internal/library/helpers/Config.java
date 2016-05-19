@@ -21,4 +21,6 @@ public class Config {
 
     public static final String URL_ONE_BOOK_HISTORY = "/v1/book/history/{code}";
 
+    public static final String URL_HEUREKOVINY="v1/internal-books/";
+
 }

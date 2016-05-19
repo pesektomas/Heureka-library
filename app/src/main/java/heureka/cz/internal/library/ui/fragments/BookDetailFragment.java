@@ -72,8 +72,7 @@ public class BookDetailFragment extends Fragment {
     @Bind(R.id.coordinator)
     View coordinator;
 
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
+
 
     @Bind(R.id.detail_name)
     TextView detailName;
@@ -173,14 +172,7 @@ public class BookDetailFragment extends Fragment {
 
         apiDescription = new ApiDescription(retrofit);
 
-//        ((ActionBarActivity)getActivity())setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+
 
         if(!canBorrow) {
             btnBorrow.getLayoutParams().height = 0;

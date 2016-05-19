@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,11 +26,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.ui.adapters.ViewPagerAdapter;
+import heureka.cz.internal.library.ui.adapters.ViewPagerAdapterMain;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.MySavedBookFragment;
+import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
 
 public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
 
@@ -43,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+
+
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -107,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         Fragment f = null;
         switch (menuItem) {
             case R.id.nav_books:
-                f = new BookListFragment();
+                //f = new BookListFragment();
+                f=new ParentBookListFragment();
                 break;
             case R.id.nav_my_books:
                 f = new MyBookListFragment();

@@ -3,7 +3,6 @@ package heureka.cz.internal.library.ui.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
-import heureka.cz.internal.library.repository.Book;
-import heureka.cz.internal.library.repository.BookHolders;
-import heureka.cz.internal.library.rest.ApiDescription;
-import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.ViewPagerAdapterMain;
 
 /**
@@ -44,8 +39,9 @@ public class ParentBookListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         System.out.println("PARENT ON VIEXCREATED");
         ViewPager viewPager = (ViewPager)getView().findViewById(R.id.pager3);
+        viewPager.setAdapter(null);
         viewPager.setAdapter(new ViewPagerAdapterMain(getActivity().getSupportFragmentManager()));
-            getActivity().setTitle(R.string.tit_books);
+        getActivity().setTitle(R.string.tit_books);
 
 
     }

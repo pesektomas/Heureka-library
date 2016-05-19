@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import heureka.cz.internal.library.ui.fragments.BookDetailFragment;
 import heureka.cz.internal.library.ui.fragments.BookHistoryFragment;
@@ -14,7 +15,7 @@ import heureka.cz.internal.library.ui.fragments.HeurekovinyListFragment;
 /**
  * Created by Ondrej on 18. 5. 2016.
  */
-public class ViewPagerAdapterMain extends FragmentPagerAdapter {
+public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
 
     final int PAGE_COUNT = 2;
 

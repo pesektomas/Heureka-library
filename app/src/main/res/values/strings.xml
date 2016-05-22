@@ -25,7 +25,8 @@
     <string name="info">Kdo má půjčeno:</string>
     <string name="borrow">Vypůjčit</string>
     <string name="reserve">Rezervovat</string>
-
+    <string name="str_return">Vrátit</string>
+    <string name="rate_and_return">Ohodnotit a vrátit</string>
 
 
 </resources>

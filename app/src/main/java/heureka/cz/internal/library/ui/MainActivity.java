@@ -178,11 +178,12 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
     }
 
     @Override
-    public void bookDetail(Book book) {
+    public void bookDetail(Book book, boolean isMyBook) {
         Intent intent = new Intent(this, BookDetailAndResActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_BOOK_DETAIL, book);
         bundle.putBoolean(BookDetailActivity.KEY_CAN_RESERVE, true);
+        bundle.putBoolean(BookDetailActivity.MY_BOOK, isMyBook);
         intent.putExtras(bundle);
 
         startActivity(intent);

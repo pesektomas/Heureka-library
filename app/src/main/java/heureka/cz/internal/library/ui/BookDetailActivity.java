@@ -34,6 +34,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
+    public static final String MY_BOOK = "is_my_book";
 
     private Book bookDetail;
 

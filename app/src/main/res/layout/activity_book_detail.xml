@@ -100,6 +100,14 @@
             android:text="@string/reserve"
             />
 
+        <Button
+            android:id="@+id/btn_return"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/book_btn_padding"
+            android:text="@string/str_return"
+            />
+
 
     </LinearLayout>
 </ScrollView>

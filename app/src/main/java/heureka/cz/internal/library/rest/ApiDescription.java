@@ -27,6 +27,10 @@ public class ApiDescription {
 
     ApiInterface apiInterface;
 
+    public void returnBook(Integer bookId, ResponseHandler responseHandler) {
+
+    }
+
     enum BookApi{
         BOOKS, MY_BOOKS
     }

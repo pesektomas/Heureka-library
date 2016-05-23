@@ -36,6 +36,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.BookReturnActivity" />
         <activity android:name=".ui.BookDetailAndResActivity" />
 
         <receiver

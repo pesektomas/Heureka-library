@@ -25,6 +25,7 @@ public class BookDetailAndResActivity extends AppCompatActivity{
     public static final String KEY_CAN_RESERVE = "can_reserve";
     public static final String KEY_CAN_RETURN = "can_return";
     public static final String KEY_CODE = "code";
+    public static final String MY_BOOK = "is_my_book";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;

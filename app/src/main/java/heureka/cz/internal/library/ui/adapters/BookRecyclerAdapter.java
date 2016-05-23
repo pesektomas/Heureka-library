@@ -37,6 +37,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         notifyDataSetChanged();
     }
 
+
     public void setListener(OnTaskItemClickListener listener) {
         this.listener = listener;
     }
@@ -46,6 +47,8 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book, parent, false);
         return new ViewHolder(view);
     }
+
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {

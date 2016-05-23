@@ -37,6 +37,10 @@ public class MyBookListFragment extends AbstractBookFragment {
     }
 
     @Override
+    protected boolean isMyBook() {
+        return true;
+    }
+    @Override
     protected void callApi() {
 
         if(settings.get() == null) {
@@ -47,7 +51,9 @@ public class MyBookListFragment extends AbstractBookFragment {
             @Override
             public void onResponse(Object data) {
                 Log.d(TAG, "load books");
+
                 adapter.setData((ArrayList<Book>) data);
+
             }
 
             @Override
@@ -61,4 +67,6 @@ public class MyBookListFragment extends AbstractBookFragment {
     protected int getTitle() {
         return R.string.tit_my_books;
     }
+
+
 }

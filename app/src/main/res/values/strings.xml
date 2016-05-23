@@ -34,5 +34,8 @@
     <string name="gcm_sender_id">29324601769</string>
 
     <string name="download">Stáhnout</string>
+    <string name="str_return">Vrátit</string>
+    <string name="rate_and_return">Ohodnotit a vrátit</string>
+
 
 </resources>

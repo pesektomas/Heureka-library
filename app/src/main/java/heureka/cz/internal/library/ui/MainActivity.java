@@ -1,7 +1,5 @@
 package heureka.cz.internal.library.ui;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PersistableBundle;
@@ -15,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +23,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -48,6 +42,7 @@ import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
+import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 import retrofit2.Retrofit;
 

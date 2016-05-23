@@ -19,8 +19,11 @@ import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
+import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
+import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.adapters.HeurekaRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.HistoryRecyclerAdapter;
@@ -29,19 +32,21 @@ import retrofit2.Retrofit;
 /**
  * Created by Ondrej on 18. 5. 2016.
  */
-
-
 public class HeurekovinyListFragment extends Fragment{
     protected ApiDescription apiDescription;
 
     @Inject
-    Retrofit retrofit;
+    RetrofitBuilder retrofitBuilder;
 
     @Inject
     CollectionUtils collectionUtils;
 
+    @Inject
+    Settings settings;
+
     @Bind(R.id.todo_list_view3)
     RecyclerView recyclerView;
+
     protected HeurekaRecyclerAdapter adapter;
     public static final String TAG = "HeurekaListFragment";
 
@@ -51,7 +56,8 @@ public class HeurekovinyListFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_heurekoviny_list, container, false);
 
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
-        apiDescription = new ApiDescription(retrofit);
+
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));
         ButterKnife.bind(this, view);
 
         return view;

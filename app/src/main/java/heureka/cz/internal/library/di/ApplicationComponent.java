@@ -3,7 +3,6 @@ package heureka.cz.internal.library.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import heureka.cz.internal.library.ui.BookDetailActivity;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.dialogs.SettingsDialog;

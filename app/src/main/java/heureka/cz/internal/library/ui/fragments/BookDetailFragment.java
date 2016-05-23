@@ -8,11 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,17 +34,8 @@ import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.adapters.AvailableRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.UsersRecyclerAdapter;
-import retrofit2.Retrofit;
 
 public class BookDetailFragment extends Fragment {
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Get the view from fragment_book_detailk_detail.xml
-        View view = inflater.inflate(R.layout.activity_book_detail, container, false);
-        return view;
-    }
 
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
@@ -168,6 +156,8 @@ public class BookDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_book_detail, container, false);
         return view;
     }
+
+
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {

@@ -3,6 +3,8 @@ package heureka.cz.internal.library.ui.fragments;
 /**
  * Created by Ondrej on 6. 5. 2016.
  */
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -32,6 +36,8 @@ import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.rest.ApiDescription.ResponseHandler;
+import heureka.cz.internal.library.ui.BookDetailActivity;
 import heureka.cz.internal.library.ui.BookReturnActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.adapters.AvailableRecyclerAdapter;
@@ -39,7 +45,7 @@ import heureka.cz.internal.library.ui.adapters.UsersRecyclerAdapter;
 import retrofit2.Retrofit;
 
 public class BookDetailFragment extends Fragment {
-
+String user = "tomas";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,10 +57,6 @@ public class BookDetailFragment extends Fragment {
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
     public static final String MY_BOOK = "is_my_book";
-
-
-
-// ismybook
 
     private Book bookDetail;
 
@@ -83,6 +85,8 @@ public class BookDetailFragment extends Fragment {
 
 //    @Bind(R.id.toolbar)
 //    Toolbar toolbar;
+@Bind(R.id.ratingBar)
+RatingBar ratingBar;
 
     @Bind(R.id.detail_name)
     TextView detailName;
@@ -117,7 +121,7 @@ public class BookDetailFragment extends Fragment {
     @OnClick(R.id.btn_borrow)
     void borrowBook() {
         btnBorrow.setEnabled(false);
-        apiDescription.borrowBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
+        apiDescription.borrowBook(bookDetail.getBookId(), new ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Snackbar.make(coordinator, ((Info)data).getInfo(), Snackbar.LENGTH_SHORT).show();
@@ -133,9 +137,28 @@ public class BookDetailFragment extends Fragment {
     @OnClick(R.id.btn_return)
     void returnBook() {
         btnReturn.setEnabled(false);
-        Intent intent = new Intent(getActivity(), BookReturnActivity.class);
-        intent.putExtra("BOOK_ID", bookDetail.getId());
-        startActivity(intent);
+        //Intent intent = new Intent(activity, BookReturnActivity.class);
+      //  Long bookId = bookDetail.getId();
+        apiDescription.returnBook(bookDetail.getBookId(), user, "Praha", 5, "Ahoj", new ResponseHandler() {
+            @Override
+            public void onResponse(Object data) {
+                Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure() {
+                btnBorrow.setEnabled(true);
+            }
+        });
+
+
+//        BookReturnFragment nextFrag= new BookReturnFragment();
+//        this.getFragmentManager().beginTransaction()
+//                .replace(R.id.container, nextFrag,"TAG")
+//                .addToBackStack(null)
+//                .commit();
+       // intent.putExtra("BOOK_ID", bookId);
+        //startActivity(intent);
 
 //        apiDescription.returnBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
 //            @Override

@@ -185,8 +185,8 @@ public class ApiDescription {
         });
     }
 
-    public void historyOneBook(String bookCode, final ResponseHandler responseHandler){
-        Call<ArrayList<BookHolders>> call = apiInterface.oneBookHistory(bookCode);
+    public void historyOneBook(Integer bookId, final ResponseHandler responseHandler){
+        Call<ArrayList<BookHolders>> call = apiInterface.oneBookHistory(bookId);
         call.enqueue(new Callback<ArrayList<BookHolders>>() {
             @Override
             public void onResponse(Call<ArrayList<BookHolders>> call, Response<ArrayList<BookHolders>> response) {

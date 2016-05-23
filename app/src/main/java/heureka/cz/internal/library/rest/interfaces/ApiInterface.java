@@ -43,7 +43,7 @@ public interface ApiInterface {
     Call<Info> returnBook(@Path("id") Integer id, @Path("user") String user, @Path("place") String place, @Path("rate") int rate,@Path("ratetext") String rateText);
 
     @GET(Config.URL_ONE_BOOK_HISTORY)
-    Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);
+    Call<ArrayList<BookHolders>> oneBookHistory(@Path("id") Integer bookId);
 
 
     @GET(Config.URL_HEUREKOVINY)

@@ -21,7 +21,7 @@ public class Config {
 
     public static final String URL_RETURN_BOOK = "/book/return/id/{id}/user/{user}/place/{place}/rate/{rate}/rate_text/{ratetext}";
 
-    public static final String URL_ONE_BOOK_HISTORY = "book/history/{code}";
+    public static final String URL_ONE_BOOK_HISTORY = "book/history/{id}";
 
     public static final String URL_USERS = "add-user/{name}/email/{email}";
 

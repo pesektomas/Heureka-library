@@ -48,13 +48,6 @@ import heureka.cz.internal.library.ui.adapters.UsersRecyclerAdapter;
 public class BookDetailFragment extends Fragment {
 
 String user = "tomas";
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Get the view from fragment_book_detailk_detail.xml
-        View view = inflater.inflate(R.layout.activity_book_detail, container, false);
-        return view;
-    }
 
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
@@ -222,6 +215,14 @@ String user = "tomas";
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Get the view from fragment_book_detailk_detail.xml
+        View view = inflater.inflate(R.layout.activity_book_detail, container, false);
+        return view;
+    }
+
+    @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -249,7 +250,7 @@ String user = "tomas";
             bookCode = savedInstanceState.getString(BookDetailAndResActivity.KEY_CODE);
         }
 
-        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));
 
         if(!canBorrow) {
             btnBorrow.getLayoutParams().height = 0;

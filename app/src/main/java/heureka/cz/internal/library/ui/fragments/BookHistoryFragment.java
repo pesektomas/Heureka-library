@@ -23,8 +23,11 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
+import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.adapters.HistoryRecyclerAdapter;
 
 public class BookHistoryFragment extends Fragment {
@@ -35,17 +38,19 @@ public class BookHistoryFragment extends Fragment {
     @Inject
     CollectionUtils collectionUtils;
 
+    @Inject
+    Settings settings;
+
     @Bind(R.id.todo_list_view2)
     RecyclerView recyclerView;
 
-    String code= "";
-
     protected ApiDescription apiDescription;
+
     protected HistoryRecyclerAdapter adapter;
 
     public static final String TAG = "BookHistoryFragment";
 
-
+    private Book bookDetail;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +59,7 @@ public class BookHistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_book_history, container, false);
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
 
-        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));
         ButterKnife.bind(this, view);
         return view;
     }
@@ -65,8 +70,7 @@ public class BookHistoryFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         initAdapter(new ArrayList<BookHolders>());
-        Bundle bundle = this.getArguments();
-        code = bundle.getString("concreteBook");
+        bookDetail = getActivity().getIntent().getExtras().getParcelable(MainActivity.KEY_BOOK_DETAIL);
 
 
         callApi();
@@ -74,7 +78,7 @@ public class BookHistoryFragment extends Fragment {
     }
     protected void callApi() {
 
-        apiDescription.historyOneBook(code, new ApiDescription.ResponseHandler() {
+        apiDescription.historyOneBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Log.d(TAG, "load books");

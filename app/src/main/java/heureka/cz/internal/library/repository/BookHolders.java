@@ -13,6 +13,7 @@ public class BookHolders {
     @SerializedName("return")
     String returnB;
     String rate;
+    String textRate;
 
     public String getBorrowDate(){
         return date;
@@ -32,5 +33,13 @@ public class BookHolders {
 
     public String getRate(){
         return rate;
+    }
+
+    public String getTextRate() {
+        return textRate;
+    }
+
+    public void setTextRate(String textRate) {
+        this.textRate = textRate;
     }
 }

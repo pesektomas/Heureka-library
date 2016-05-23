@@ -17,9 +17,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
 
     BookDetailFragment detailKnihy;
+
     // Tab Titles
     private String tabtitles[] = new String[] { "Detail knihy", "Historie knihy" };
-    Context context;
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -36,11 +36,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
 
             case 0:
-                System.out.println("CASE0");
                 detailKnihy = new BookDetailFragment();
                 return detailKnihy;
-
-
             case 1:
                 System.out.println("CASE1");
                 Bundle bundle = new Bundle();

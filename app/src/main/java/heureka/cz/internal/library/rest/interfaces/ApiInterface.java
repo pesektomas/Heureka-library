@@ -40,7 +40,7 @@ public interface ApiInterface {
     Call<Info> checkBorrowBook(@Path("id") Integer id, @Path("user") String user);
 
     @POST(Config.URL_RETURN_BOOK)
-    Call<Info> returnBook(@Path("id") Integer id, @Path("user") String user, @Path("place") String place, @Path("rate") Integer rate, @Path("ratetext") String ratetext);
+    Call<Info> returnBook(@Path("id") Integer id, @Path("user") String user, @Path("place") String place, @Path("rate") int rate,@Path("ratetext") String rateText);
 
     @GET(Config.URL_ONE_BOOK_HISTORY)
     Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);

@@ -26,6 +26,8 @@ public class ApiDescription {
 
     ApiInterface apiInterface;
 
+
+
     enum BookApi{
         BOOKS, MY_BOOKS
     }
@@ -163,9 +165,8 @@ public class ApiDescription {
         });
     }
 
-    public void returnBook(Integer bookId, String user, String place, Integer rate, String rateText,
-                           final ResponseHandler responseHandler) {
-        Call<Info> call = apiInterface.returnBook(bookId, user, place, rate, rateText);
+    public void returnBook(Integer bookId, String user, String place, int rate, String rateText,final ResponseHandler responseHandler) {
+        Call<Info> call = apiInterface.returnBook(bookId, user, place,rate, rateText);
 
         call.enqueue(new Callback<Info>() {
             @Override

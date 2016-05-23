@@ -81,6 +81,12 @@ public abstract class AbstractBookFragment extends Fragment {
 
     protected abstract int getTitle();
 
+
+
+    protected boolean isMyBook() {
+        return false;
+    }
+
     private void initAdapter(ArrayList<Book> books) {
         Log.d(TAG, "set adapter");
 
@@ -98,9 +104,15 @@ public abstract class AbstractBookFragment extends Fragment {
 
                 if(getActivity() instanceof BookDetailOpener) {
                     Log.d(TAG, "open?");
-                    ((BookDetailOpener)getActivity()).bookDetail(adapter.getBooks().get(taskPosition));
+
+                    ((BookDetailOpener)getActivity()).bookDetail(adapter.getBooks().get(taskPosition), isMyBook());
                 }
-            }
+
+//                if(getActivity() instanceof BookReturnOpener) {
+//                    Log.d(TAG, "return");
+//                    ((BookReturnOpener)getActivity()).bookReturn(adapter.getBooks().get(taskPosition));
+//                }
+          }
 
             @Override
             public void onItemLongClick(int taskPosition) {
@@ -118,10 +130,15 @@ public abstract class AbstractBookFragment extends Fragment {
 
     public interface BookDetailOpener {
 
-        public void bookDetail(Book book);
+        public void bookDetail(Book book, boolean myBook);
 
     }
 
+    public interface BookReturnOpener {
+
+        public void bookReturn(Book book);
+
+    }
     public interface TitleSetter {
 
         public void setTitle(int resId);

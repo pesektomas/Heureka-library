@@ -13,7 +13,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.helpers.CollectionUtils;
-import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
 
 /**

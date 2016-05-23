@@ -33,18 +33,15 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.gcm.RegistrationIntentService;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
-import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
-import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
 

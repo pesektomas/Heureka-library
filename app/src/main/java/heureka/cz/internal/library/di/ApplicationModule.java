@@ -10,19 +10,16 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
 import heureka.cz.internal.library.helpers.CollectionUtils;
-import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Settings;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
+import javax.inject.Singleton;
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * Created by tomas on 13.4.16.

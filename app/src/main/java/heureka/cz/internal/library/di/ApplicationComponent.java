@@ -1,8 +1,5 @@
 package heureka.cz.internal.library.di;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
@@ -14,6 +11,9 @@ import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.HeurekovinyListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
+
+import javax.inject.Singleton;
+import dagger.Component;
 
 /**
  * Created by tomas on 13.4.16.

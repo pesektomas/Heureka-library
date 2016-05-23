@@ -1,14 +1,10 @@
 package heureka.cz.internal.library.ui.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import heureka.cz.internal.library.ui.fragments.BookDetailFragment;
-import heureka.cz.internal.library.ui.fragments.BookHistoryFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.HeurekovinyListFragment;
 

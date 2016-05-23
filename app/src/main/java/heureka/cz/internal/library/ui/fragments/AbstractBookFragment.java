@@ -23,7 +23,6 @@ import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
-import retrofit2.Retrofit;
 
 /**
  * Created by tomas on 28.4.16.

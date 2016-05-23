@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;

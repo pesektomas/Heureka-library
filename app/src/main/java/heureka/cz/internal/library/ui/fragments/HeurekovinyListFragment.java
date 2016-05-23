@@ -21,13 +21,10 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
-import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.adapters.HeurekaRecyclerAdapter;
-import heureka.cz.internal.library.ui.adapters.HistoryRecyclerAdapter;
-import retrofit2.Retrofit;
 
 /**
  * Created by Ondrej on 18. 5. 2016.

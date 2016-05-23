@@ -2,9 +2,6 @@ package heureka.cz.internal.library.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +9,11 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
-import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.rest.ApiDescription;
-import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
-import retrofit2.Retrofit;
 
 /**
  * Created by Alina on 07/05/2016.

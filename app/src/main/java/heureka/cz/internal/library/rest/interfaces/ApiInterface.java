@@ -1,9 +1,5 @@
 package heureka.cz.internal.library.rest.interfaces;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.helpers.Config;
@@ -11,13 +7,11 @@ import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
-import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Url;
 
 /**
  * Created by tomas on 26.4.16.

@@ -12,12 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.JsonArray;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -29,13 +23,9 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
-import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
-import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.rest.ApiDescription;
-import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.HistoryRecyclerAdapter;
-import retrofit2.Retrofit;
 
 public class BookHistoryFragment extends Fragment {
 

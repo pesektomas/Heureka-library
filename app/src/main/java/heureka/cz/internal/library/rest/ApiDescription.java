@@ -2,19 +2,12 @@ package heureka.cz.internal.library.rest;
 
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
-import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 import retrofit2.Call;

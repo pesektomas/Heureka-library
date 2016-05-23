@@ -1,9 +1,6 @@
 package heureka.cz.internal.library.helpers;
 
-import android.util.Log;
-
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by tomas on 27.4.16.

@@ -54,8 +54,8 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         holder.name.setText(bookHolder.getName());
         holder.date.setText(bookHolder.getBorrowDate());
         String star =bookHolder.getRate();
-        holder.rate.setImageResource(R.mipmap.ic_launcher);
-        /*switch (star) {
+
+        switch (star) {
             case "0":
                 holder.rate.setImageResource(R.drawable.nulahv);
                 break;
@@ -76,7 +76,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
                 break;
             case "null":
                 holder.rate.setImageResource(R.drawable.nulahv);
-        }*/
+        }
 
     }
 

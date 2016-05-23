@@ -25,7 +25,7 @@
         android:id="@+id/historyRateStar"
         android:layout_width="0dp"
         android:layout_weight="0.3"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ctyrihv"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:layout_height="20dp" />

@@ -262,4 +262,25 @@ public class ApiDescription {
             }
         });
     }
+
+    public void registerToken(String email, String token, final ResponseHandler responseHandler) {
+        Call<Info> call = apiInterface.registerToken(email, token);
+
+        call.enqueue(new Callback<Info>() {
+            @Override
+            public void onResponse(Call<Info> call, Response<Info> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Info> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
 }

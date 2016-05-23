@@ -54,4 +54,7 @@ public interface ApiInterface {
 
     @POST(Config.URL_USERS)
     Call<Info> addUsers(@Path("name") String name, @Path("email") String email);
+
+    @POST(Config.URL_REGISTER_TOKEN)
+    Call<Info> registerToken(@Path("email") String email, @Path("token") String token);
 }

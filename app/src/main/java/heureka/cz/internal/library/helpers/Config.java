@@ -25,6 +25,8 @@ public class Config {
 
     public static final String URL_USERS = "add-user/{name}/email/{email}";
 
+    public static final String URL_REGISTER_TOKEN = "user-token/{email}/{token}";
+
     public static final String URL_APIS = "list";
 
     public static final String URL_HEUREKOVINY="v1/internal-books/";

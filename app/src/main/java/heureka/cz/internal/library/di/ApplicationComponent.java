@@ -1,5 +1,6 @@
 package heureka.cz.internal.library.di;
 
+import heureka.cz.internal.library.gcm.RegistrationIntentService;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
@@ -40,5 +41,7 @@ public interface ApplicationComponent {
     void inject(SearchDialog searchDialog);
     void inject(SettingsDialog settingsDialog);
 
+    // services
+    void inject(RegistrationIntentService registrationIntentService);
 
 }

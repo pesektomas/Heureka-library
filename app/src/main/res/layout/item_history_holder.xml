@@ -14,14 +14,19 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/dateBorrow"
+        android:id="@+id/historyDate"
         android:layout_width="0dp"
         android:layout_weight="0.3"
         android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/dateReturn"
+
+
+    <ImageButton
+        android:id="@+id/historyRateStar"
         android:layout_width="0dp"
         android:layout_weight="0.3"
-        android:layout_height="wrap_content" />
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:layout_height="20dp" />
 
 </LinearLayout>

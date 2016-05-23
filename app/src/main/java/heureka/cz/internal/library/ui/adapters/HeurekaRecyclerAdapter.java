@@ -5,9 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 
@@ -16,25 +14,25 @@ import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.Heurekoviny;
 
 /**
- * Created by Ondrej on 9. 5. 2016.
+ * Created by Ondrej on 18. 5. 2016.
  */
-public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.ViewHolder>{
+public class HeurekaRecyclerAdapter extends RecyclerView.Adapter<HeurekaRecyclerAdapter.ViewHolder>{
 
-    private ArrayList<BookHolders> holders;
+    private ArrayList<Heurekoviny> heurekoviny;
     private OnTaskItemClickListener listener;
-
 
     private CollectionUtils collectionUtils;
 
-    public HistoryRecyclerAdapter(@NonNull ArrayList<BookHolders> holders, CollectionUtils collectionUtils) {
-        this.holders = holders;
+    public HeurekaRecyclerAdapter(@NonNull ArrayList<Heurekoviny> heurekoviny, CollectionUtils collectionUtils) {
+        this.heurekoviny = heurekoviny;
         this.collectionUtils = collectionUtils;
     }
 
-    public void setData(@NonNull ArrayList<BookHolders> holders) {
-        this.holders = holders;
+    public void setData(@NonNull ArrayList<Heurekoviny> heurekoviny) {
+        this.heurekoviny = heurekoviny;
         notifyDataSetChanged();
     }
 
@@ -44,60 +42,34 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history_holder, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_heurekoviny, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final BookHolders bookHolder = holders.get(position);
-        holder.name.setText(bookHolder.getName());
-        holder.date.setText(bookHolder.getBorrowDate());
-        String star =bookHolder.getRate();
-        switch (star) {
-            case "0":
-                holder.rate.setImageResource(R.drawable.nulahv);
-                break;
-            case "1":
-                holder.rate.setImageResource(R.drawable.jednahv);
-                break;
-            case "2":
-                holder.rate.setImageResource(R.drawable.dvehv);
-                break;
-            case "3":
-                holder.rate.setImageResource(R.drawable.trihv);
-                break;
-            case "4":
-                holder.rate.setImageResource(R.drawable.ctyrihv);
-                break;
-            case "5":
-                holder.rate.setImageResource(R.drawable.pethv);
-                break;
-            case "null":
-                holder.rate.setImageResource(R.drawable.nulahv);
-        }
+    public void onBindViewHolder(ViewHolder heurekovinyH, int position) {
+        final Heurekoviny heurekovina = heurekoviny.get(position);
+        heurekovinyH.name.setText("Heurekoviny");
+        heurekovinyH.date.setText(heurekovina.getDate());
 
     }
 
-    public ArrayList<BookHolders> getHolders() {
-        return holders;
+    public ArrayList<Heurekoviny> getHeurekoviny() {
+        return heurekoviny;
     }
 
     @Override
     public int getItemCount() {
-        return holders.size();
+        return heurekoviny.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-        @Bind(R.id.historyUser)
+        @Bind(R.id.heurekovinyId)
         public TextView name;
 
-        @Bind(R.id.historyDate)
+        @Bind(R.id.heurekovinyDate)
         public TextView date;
-
-        @Bind(R.id.historyRateStar)
-        public ImageButton rate;
 
 
 
@@ -123,6 +95,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
             return false;
         }
     }
+
 
     public interface OnTaskItemClickListener {
         boolean onBackupClick(int taskPosition);

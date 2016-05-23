@@ -33,5 +33,6 @@
     <string name="notActivated">Váš účet nebyl ještě aktivován</string>
     <string name="gcm_sender_id">29324601769</string>
 
+    <string name="download">Stáhnout</string>
 
 </resources>

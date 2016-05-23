@@ -27,4 +27,6 @@ public class Config {
 
     public static final String URL_APIS = "list";
 
+    public static final String URL_HEUREKOVINY="v1/internal-books/";
+
 }

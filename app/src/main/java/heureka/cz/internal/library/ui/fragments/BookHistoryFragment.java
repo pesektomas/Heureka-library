@@ -77,6 +77,8 @@ public class BookHistoryFragment extends Fragment {
         initAdapter(new ArrayList<BookHolders>());
         Bundle bundle = this.getArguments();
         code = bundle.getString("concreteBook");
+
+
         callApi();
 
     }
@@ -88,9 +90,6 @@ public class BookHistoryFragment extends Fragment {
                 Log.d(TAG, "load books");
 
                 ArrayList<BookHolders> list = (ArrayList<BookHolders>)data;
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println("list"+i+list.get(i).user_name);
-                }
                 adapter.setData((ArrayList<BookHolders>) data);
 
             }

@@ -175,7 +175,8 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         Fragment f = null;
         switch (menuItem) {
             case R.id.nav_books:
-                f = new BookListFragment();
+                //f = new BookListFragment();
+                f=new ParentBookListFragment();
                 break;
             case R.id.nav_my_books:
                 f = new MyBookListFragment();

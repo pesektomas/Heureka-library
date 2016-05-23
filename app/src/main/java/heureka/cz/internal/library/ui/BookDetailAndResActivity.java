@@ -62,6 +62,10 @@ public class BookDetailAndResActivity extends AppCompatActivity{
                 FragmentManager fm = getSupportFragmentManager();
                 searchDialog.show(fm, "fragment_search_dialog");
                 break;
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

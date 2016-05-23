@@ -10,6 +10,7 @@ import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
 import retrofit2.Call;
@@ -49,6 +50,10 @@ public interface ApiInterface {
 
     @GET(Config.URL_ONE_BOOK_HISTORY)
     Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);
+
+
+    @GET(Config.URL_HEUREKOVINY)
+    Call<ArrayList<Heurekoviny>> getHeurekoviny();
 
     @GET(Config.URL_APIS)
     Call<ArrayList<Api>> api();

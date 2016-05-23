@@ -57,7 +57,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         holder.name.setText(book.getName());
         holder.lang.setText(book.getLang());
         holder.form.setText(book.getForm());
-        holder.tags.setText(book.getTags().size() > 0 ? collectionUtils.implode(",", book.getTags()) : book.getDbTags());
+        holder.tags.setText(book.getTags().size() > 0 ? collectionUtils.implode(",", book.getTags()) : "");
     }
 
     public ArrayList<Book> getBooks() {

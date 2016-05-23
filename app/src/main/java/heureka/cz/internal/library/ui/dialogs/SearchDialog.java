@@ -31,6 +31,8 @@ import eu.inmite.android.lib.validations.form.annotations.NotEmpty;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
+import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
@@ -47,7 +49,7 @@ public class SearchDialog extends DialogFragment {
     private String code = "";
 
     @Inject
-    Retrofit retrofit;
+    RetrofitBuilder retrofitBuilder;
 
     private ApiDescription apiDescription;
 
@@ -69,13 +71,15 @@ public class SearchDialog extends DialogFragment {
             return;
         }
 
-        apiDescription.getBook(searchValue.getText().toString(), new ApiDescription.ResponseHandler() {
+        final String bookCode = searchValue.getText().toString();
+        apiDescription.getBook(bookCode, new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Intent intent = new Intent(getActivity(), BookDetailAndResActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(MainActivity.KEY_BOOK_DETAIL, (Book)data);
                 bundle.putBoolean(BookDetailAndResActivity.KEY_CAN_BORROW, true);
+                bundle.putString(BookDetailAndResActivity.KEY_CODE, bookCode);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -104,7 +108,7 @@ public class SearchDialog extends DialogFragment {
         ButterKnife.bind(this, view);
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
 
-        apiDescription = new ApiDescription(retrofit);
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
         return view;
     }
 

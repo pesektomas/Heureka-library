@@ -7,6 +7,7 @@ import org.json.JSONStringer;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Holder;
@@ -15,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 /**
  * Created by tomas on 26.4.16.
@@ -34,14 +36,23 @@ public interface ApiInterface {
     Call<Book> getBook(@Path("code") String code);
 
     @POST(Config.URL_RESERVE_BOOK)
-    Call<Info> reserveBook(@Path("id") Integer id);
+    Call<Info> reserveBook(@Path("id") Integer id, @Path("user") String user);
 
     @POST(Config.URL_BORROW_BOOK)
-    Call<Info> borrowBook(@Path("id") Integer id);
+    Call<Info> borrowBook(@Path("code") String code, @Path("user") String user);
+
+    @GET(Config.URL_BORROW_BOOK)
+    Call<Info> checkBorrowBook(@Path("id") Integer id, @Path("user") String user);
 
     @POST(Config.URL_RETURN_BOOK)
-    Call<Info> returnBook(@Path("id") Integer id, @Path("place") String place);
+    Call<Info> returnBook(@Path("id") Integer id, @Path("user") String user, @Path("place") String place, @Path("rate") Integer rate, @Path("ratetext") String ratetext);
 
     @GET(Config.URL_ONE_BOOK_HISTORY)
     Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);
+
+    @GET(Config.URL_APIS)
+    Call<ArrayList<Api>> api();
+
+    @POST(Config.URL_USERS)
+    Call<Info> addUsers(@Path("name") String name, @Path("email") String email);
 }

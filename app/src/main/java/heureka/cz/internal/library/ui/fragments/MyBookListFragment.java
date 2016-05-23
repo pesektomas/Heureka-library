@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,9 +22,12 @@ import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
+import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 /**
@@ -29,10 +35,8 @@ import retrofit2.Retrofit;
  */
 public class MyBookListFragment extends AbstractBookFragment {
 
-    /**
-     * TODO nacist z google?
-     * */
-    private String user = "tomas";
+    @Inject
+    Settings settings;
 
     @Nullable
     @Override
@@ -40,14 +44,19 @@ public class MyBookListFragment extends AbstractBookFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
-        apiDescription = new ApiDescription(retrofit);
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));
 
         return v;
     }
 
     @Override
     protected void callApi() {
-        apiDescription.getMyBooks(user, new ApiDescription.ResponseHandler() {
+
+        if(settings.get() == null) {
+            return;
+        }
+
+        apiDescription.getMyBooks(settings.get().getEmail(), new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Log.d(TAG, "load books");

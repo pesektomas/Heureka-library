@@ -1,5 +1,7 @@
 package heureka.cz.internal.library.ui;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PersistableBundle;
@@ -13,25 +15,45 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
+import heureka.cz.internal.library.application.CodeCamp;
+import heureka.cz.internal.library.gcm.RegistrationIntentService;
+import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
+import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.Settings;
+import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
+import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public static final String TAG = "MainActivity";
     public static final String KEY_BOOK_DETAIL = "book_detail";
@@ -44,6 +66,14 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+    @Inject
+    RetrofitBuilder retrofitBuilder;
+
+    @Inject
+    Settings settings;
+
+    private ApiDescription apiDescription;
+
     private ActionBarDrawerToggle drawerToggle;
 
     @Override
@@ -52,6 +82,15 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+        ((CodeCamp)getApplication()).getApplicationComponent().inject(this);
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
 
         setSupportActionBar(toolbar);
         setupToolbar();
@@ -79,6 +118,35 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
             createFragmentForActionId(R.id.nav_books);
         }
 
+        initSettings();
+
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void initSettings() {
+
+        if(settings.get() == null) {
+            SettingsDialog settingsDialog= SettingsDialog.newInstance();
+            FragmentManager fm = getSupportFragmentManager();
+            settingsDialog.show(fm, "fragment_settings_dialog");
+        } else if (settings.get().getActive() == 0) {
+            Toast.makeText(this, R.string.notActivated, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void hideIme() {

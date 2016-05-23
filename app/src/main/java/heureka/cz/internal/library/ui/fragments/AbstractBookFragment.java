@@ -18,7 +18,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.helpers.CollectionUtils;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
 import retrofit2.Retrofit;
@@ -35,10 +37,13 @@ public abstract class AbstractBookFragment extends Fragment {
     RecyclerView recyclerView;
 
     @Inject
-    Retrofit retrofit;
+    RetrofitBuilder retrofitBuilder;
 
     @Inject
     CollectionUtils collectionUtils;
+
+    @Inject
+    Settings settings;
 
     protected BookRecyclerAdapter adapter;
     protected ApiDescription apiDescription;

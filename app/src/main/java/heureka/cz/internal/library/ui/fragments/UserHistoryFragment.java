@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
+import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
@@ -37,7 +38,7 @@ public class UserHistoryFragment extends AbstractBookFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
-        apiDescription = new ApiDescription(retrofit);
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
 
         return v;
     }

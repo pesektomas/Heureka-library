@@ -27,9 +27,13 @@ import butterknife.OnClick;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
+import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Info;
+import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.adapters.AvailableRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.UsersRecyclerAdapter;
@@ -37,29 +41,20 @@ import retrofit2.Retrofit;
 
 public class BookDetailFragment extends Fragment {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Get the view from fragment_book_detailk_detail.xml
-        View view = inflater.inflate(R.layout.activity_book_detail, container, false);
-        return view;
-    }
-
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
 
     private Book bookDetail;
 
-    /**
+    /*
      * vypujcka by měla byt mozna jen po nacteni knihy cteckou,
-     * aby nedoslo k vypojceni jine knihy
-     * */
+     * aby nedoslo k vypojceni jine knihy */
     private boolean canBorrow = false;
 
-    /**
-     * zato rezervace kdykoliv jindy
-     * */
+    /** zato rezervace kdykoliv jindy */
     private boolean canReserve = false;
+
+    private String bookCode = "";
 
     private ApiDescription apiDescription;
 
@@ -67,13 +62,13 @@ public class BookDetailFragment extends Fragment {
     CollectionUtils collectionUtils;
 
     @Inject
-    Retrofit retrofit;
+    RetrofitBuilder retrofitBuilder;
+
+    @Inject
+    Settings settings;
 
     @Bind(R.id.coordinator)
     View coordinator;
-
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
 
     @Bind(R.id.detail_name)
     TextView detailName;
@@ -105,7 +100,12 @@ public class BookDetailFragment extends Fragment {
     @OnClick(R.id.btn_borrow)
     void borrowBook() {
         btnBorrow.setEnabled(false);
-        apiDescription.borrowBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
+
+        if (settings.get() == null) {
+            return;
+        }
+
+        apiDescription.borrowBook(bookCode, settings.get().getEmail(), new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Snackbar.make(coordinator, ((Info)data).getInfo(), Snackbar.LENGTH_SHORT).show();
@@ -121,7 +121,12 @@ public class BookDetailFragment extends Fragment {
     @OnClick(R.id.btn_reserve)
     void reserveBook() {
         btnReserve.setEnabled(false);
-        apiDescription.reserveBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
+
+        if (settings.get() == null) {
+            return;
+        }
+
+        apiDescription.reserveBook(bookDetail.getBookId(), settings.get().getEmail(), new ApiDescription.ResponseHandler() {
             @Override
             public void onResponse(Object data) {
                 Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
@@ -151,6 +156,12 @@ public class BookDetailFragment extends Fragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_book_detail, container, false);
+        return view;
+    }
+
+    @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -162,6 +173,7 @@ public class BookDetailFragment extends Fragment {
             bookDetail = getActivity().getIntent().getExtras().getParcelable(MainActivity.KEY_BOOK_DETAIL);
             canBorrow = getActivity().getIntent().getExtras().getBoolean(KEY_CAN_BORROW);
             canReserve = getActivity().getIntent().getExtras().getBoolean(KEY_CAN_RESERVE);
+            bookCode = getActivity().getIntent().getExtras().getString(BookDetailAndResActivity.KEY_CODE);
         }
 
         // nacteni stavu po otoceni obrazovky
@@ -169,18 +181,10 @@ public class BookDetailFragment extends Fragment {
             bookDetail = savedInstanceState.getParcelable(MainActivity.KEY_BOOK_DETAIL);
             canBorrow = savedInstanceState.getBoolean(KEY_CAN_BORROW);
             canReserve = savedInstanceState.getBoolean(KEY_CAN_RESERVE);
+            bookCode = savedInstanceState.getString(BookDetailAndResActivity.KEY_CODE);
         }
 
-        apiDescription = new ApiDescription(retrofit);
-
-//        ((ActionBarActivity)getActivity())setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
 
         if(!canBorrow) {
             btnBorrow.getLayoutParams().height = 0;
@@ -203,7 +207,7 @@ public class BookDetailFragment extends Fragment {
 
     private void initBook() {
         detailName.setText(bookDetail.getName());
-        detailTags.setText(bookDetail.getTags().size() > 0 ? collectionUtils.implode(",", bookDetail.getTags()) : bookDetail.getDbTags());
+        detailTags.setText(bookDetail.getTags().size() > 0 ? collectionUtils.implode(",", bookDetail.getTags()) : "");
         detailLang.setText(bookDetail.getLang());
         detailForm.setText(bookDetail.getForm());
         detailLink.setText(bookDetail.getDetailLink());

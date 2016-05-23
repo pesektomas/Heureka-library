@@ -27,6 +27,8 @@ import butterknife.ButterKnife;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
+import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Holder;
@@ -38,7 +40,7 @@ import retrofit2.Retrofit;
 public class BookHistoryFragment extends Fragment {
 
     @Inject
-    Retrofit retrofit;
+    RetrofitBuilder retrofitBuilder;
 
     @Inject
     CollectionUtils collectionUtils;
@@ -62,7 +64,7 @@ public class BookHistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_book_history, container, false);
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
 
-        apiDescription = new ApiDescription(retrofit);
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(Config.API_BASE_URL));
         ButterKnife.bind(this, view);
         return view;
     }

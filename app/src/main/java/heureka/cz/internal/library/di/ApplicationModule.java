@@ -16,8 +16,11 @@ import dagger.Module;
 import dagger.Provides;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.RetrofitBuilder;
+import heureka.cz.internal.library.repository.Settings;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -71,25 +74,31 @@ public class ApplicationModule {
     @Provides
     @Singleton
     OkHttpClient provideOkHttpClient() {
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         client.addNetworkInterceptor(new StethoInterceptor());
+        client.addInterceptor(interceptor);
         return client.build();
     }
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(Config.API_BASE_URL)
-                .client(okHttpClient)
-                .build();
-        return retrofit;
+    RetrofitBuilder provideRetrofitBuilder(Gson gson, OkHttpClient okHttpClient) {
+        return new RetrofitBuilder(gson, okHttpClient);
     }
 
     @Provides
     @Singleton
     CollectionUtils provideCollectionUtils() {
         return new CollectionUtils();
+    }
+
+    @Provides
+    @Singleton
+    Settings provideSettings() {
+        return new Settings();
     }
 }

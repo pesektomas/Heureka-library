@@ -19,13 +19,19 @@
     <string name="drawer_open">Zobrazit</string>
     <string name="drawer_close">Skrýt</string>
     <string name="search">Vyhledat</string>
+    <string name="set">Nastavit</string>
+    <string name="settings">Nastavení</string>
     <string name="not_empty">Políčko musí být vyplněné</string>
     <string name="detail">Detail:</string>
     <string name="available">Dostupnost:</string>
     <string name="info">Kdo má půjčeno:</string>
     <string name="borrow">Vypůjčit</string>
     <string name="reserve">Rezervovat</string>
-
+    <string name="email">e-mail</string>
+    <string name="name">Jméno</string>
+    <string name="requestSended">Váš požadavek byl odeslán</string>
+    <string name="notActivated">Váš účet nebyl ještě aktivován</string>
+    <string name="gcm_sender_id">29324601769</string>
 
 
 </resources>

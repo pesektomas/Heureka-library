@@ -1,5 +1,7 @@
 package heureka.cz.internal.library.rest;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +10,7 @@ import org.json.JSONStringer;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Holder;
@@ -22,6 +25,8 @@ import retrofit2.Retrofit;
  * Created by tomas on 26.4.16.
  */
 public class ApiDescription {
+
+    public static final String TAG = "ApiDescription";
 
     Retrofit retrofit;
 
@@ -57,6 +62,7 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+                Log.w(TAG, t);
                 responseHandler.onFailure();
             }
         });
@@ -67,6 +73,7 @@ public class ApiDescription {
         call.enqueue(new Callback<ArrayList<Book>>() {
             @Override
             public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
+                Log.d("TEST", response.message());
                 if (response.isSuccessful()) {
                     responseHandler.onResponse(response.body());
                 } else {
@@ -76,6 +83,7 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+                Log.w("ApiDescription", t);
                 responseHandler.onFailure();
             }
         });
@@ -121,8 +129,8 @@ public class ApiDescription {
         });
     }
 
-    public void borrowBook(Integer bookId, final ResponseHandler responseHandler) {
-        Call<Info> call = apiInterface.borrowBook(bookId);
+    public void borrowBook(String bookCode, String user, final ResponseHandler responseHandler) {
+        Call<Info> call = apiInterface.borrowBook(bookCode, user);
 
         call.enqueue(new Callback<Info>() {
             @Override
@@ -141,8 +149,8 @@ public class ApiDescription {
         });
     }
 
-    public void reserveBook(Integer bookId, final ResponseHandler responseHandler) {
-        Call<Info> call = apiInterface.reserveBook(bookId);
+    public void reserveBook(Integer bookId, String user, final ResponseHandler responseHandler) {
+        Call<Info> call = apiInterface.reserveBook(bookId, user);
 
         call.enqueue(new Callback<Info>() {
             @Override
@@ -161,8 +169,9 @@ public class ApiDescription {
         });
     }
 
-    public void returnBook(Integer bookId, String place, final ResponseHandler responseHandler) {
-        Call<Info> call = apiInterface.returnBook(bookId, place);
+    public void returnBook(Integer bookId, String user, String place, Integer rate, String rateText,
+                           final ResponseHandler responseHandler) {
+        Call<Info> call = apiInterface.returnBook(bookId, user, place, rate, rateText);
 
         call.enqueue(new Callback<Info>() {
             @Override
@@ -183,21 +192,10 @@ public class ApiDescription {
 
     public void historyOneBook(String bookCode, final ResponseHandler responseHandler){
         Call<ArrayList<BookHolders>> call = apiInterface.oneBookHistory(bookCode);
-        System.out.println("BOOK CODE"+bookCode+"URL"+call.request().url().toString());
-
         call.enqueue(new Callback<ArrayList<BookHolders>>() {
             @Override
             public void onResponse(Call<ArrayList<BookHolders>> call, Response<ArrayList<BookHolders>> response) {
-
-
-                    System.out.println("INRESPONSE"+response.message()+response.headers().toString());
-
                 if (response.isSuccessful()) {
-//                    ArrayList al =(ArrayList) response.body();
-System.out.println("SUCESS");
-
-                        System.out.println("RESPONSEBODY"+response.body().toString()+"json");
-
                     responseHandler.onResponse(response.body());
                 } else {
                     responseHandler.onFailure();
@@ -208,8 +206,44 @@ System.out.println("SUCESS");
             public void onFailure(Call<ArrayList<BookHolders>> call, Throwable t) {
                 responseHandler.onFailure();
             }
-
         });
+    }
 
+    public void apiList(final ResponseHandler responseHandler){
+        Call<ArrayList<Api>> call = apiInterface.api();
+
+        call.enqueue(new Callback<ArrayList<Api>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Api>> call, Response<ArrayList<Api>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Api>> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
+    public void addUser(String url, String name, String email, final ResponseHandler responseHandler){
+        Call<Info> call = apiInterface.addUsers(name, email);
+        call.enqueue(new Callback<Info>() {
+            @Override
+            public void onResponse(Call<Info> call, Response<Info> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+            @Override
+            public void onFailure(Call<Info> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
     }
 }

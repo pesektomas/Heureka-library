@@ -5,22 +5,26 @@ package heureka.cz.internal.library.helpers;
  */
 public class Config {
 
-    public static final String API_BASE_URL = "http://private-e52603-heurekalibrary.apiary-mock.com";
+    public static final String API_BASE_URL = "https://library.fiction-group.eu/api/v1/";
 
-    public static final String URL_BOOKS = "/v1/books/";
+    public static final String URL_BOOKS = "books";
 
-    public static final String URL_BOOKS_MY = "/v1/books/my/{user}";
+    public static final String URL_BOOKS_MY = "books/my/{user}";
 
-    public static final String URL_BOOKS_USER = "/v1/book/user-history/{user}";
+    public static final String URL_BOOKS_USER = "book/user-history/{user}";
 
-    public static final String URL_BOOK = "/v1/book/{code}";
+    public static final String URL_BOOK = "book/{code}";
 
-    public static final String URL_BORROW_BOOK = "/v1/book/borrow/{id}";
+    public static final String URL_BORROW_BOOK = "book/borrow/{code}/user/{user}";
 
-    public static final String URL_RESERVE_BOOK = "/v1/book/reservation/{id}";
+    public static final String URL_RESERVE_BOOK = "book/reservation/{id}/user/{user}";
 
-    public static final String URL_RETURN_BOOK = "/v1/book/return/id/{id}/place/{place}";
+    public static final String URL_RETURN_BOOK = "/book/return/id/{id}/user/{user}/place/{place}/rate/{rate}/rate_text/{ratetext}";
 
-    public static final String URL_ONE_BOOK_HISTORY = "/v1/book/history/{code}";
+    public static final String URL_ONE_BOOK_HISTORY = "book/history/{code}";
+
+    public static final String URL_USERS = "add-user/{name}/email/{email}";
+
+    public static final String URL_APIS = "list";
 
 }

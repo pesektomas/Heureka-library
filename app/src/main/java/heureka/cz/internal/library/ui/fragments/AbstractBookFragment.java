@@ -94,7 +94,7 @@ public abstract class AbstractBookFragment extends Fragment {
             return;
         }
 
-        adapter = new BookRecyclerAdapter(books, collectionUtils);
+        adapter = new BookRecyclerAdapter(books, collectionUtils, settings);
         recyclerView.setAdapter(adapter);
 
         adapter.setListener(new BookRecyclerAdapter.OnTaskItemClickListener() {

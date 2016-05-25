@@ -46,15 +46,13 @@ public interface ApiInterface {
     Call<Info> checkBorrowBook(@Path("id") Integer id, @Path("user") String user);
 
     @POST(Config.URL_RETURN_BOOK)
-    Call<Info> returnBook(@Path("id") int id, @Path("user") String user, @Path("place") String place, @Path("rate") float rate,@Path("ratetext") String rateText);
+    Call<Info> returnBook(@Path("id") int id, @Path("user") String user, @Path("place") String place, @Path("rate") int rate, @Path("ratetext") String rateText);
 
     @GET(Config.URL_ONE_BOOK_HISTORY)
-    Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);
+    Call<ArrayList<BookHolders>> oneBookHistory(@Path("id") Integer bookId);
 
     @GET(Config.URL_POSITIONS)
     Call<ArrayList<Position>> getPositions();
-    Call<ArrayList<BookHolders>> oneBookHistory(@Path("id") Integer bookId);
-
 
     @GET(Config.URL_HEUREKOVINY)
     Call<ArrayList<Heurekoviny>> getHeurekoviny();
@@ -67,4 +65,5 @@ public interface ApiInterface {
 
     @POST(Config.URL_REGISTER_TOKEN)
     Call<Info> registerToken(@Path("email") String email, @Path("token") String token);
+
 }

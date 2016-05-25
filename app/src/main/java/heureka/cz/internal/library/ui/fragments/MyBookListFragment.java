@@ -40,6 +40,7 @@ public class MyBookListFragment extends AbstractBookFragment {
     protected boolean isMyBook() {
         return true;
     }
+
     @Override
     protected void callApi() {
 

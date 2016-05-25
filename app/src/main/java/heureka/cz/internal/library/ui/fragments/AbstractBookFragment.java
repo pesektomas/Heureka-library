@@ -81,8 +81,6 @@ public abstract class AbstractBookFragment extends Fragment {
 
     protected abstract int getTitle();
 
-
-
     protected boolean isMyBook() {
         return false;
     }
@@ -107,11 +105,6 @@ public abstract class AbstractBookFragment extends Fragment {
 
                     ((BookDetailOpener)getActivity()).bookDetail(adapter.getBooks().get(taskPosition), isMyBook());
                 }
-
-//                if(getActivity() instanceof BookReturnOpener) {
-//                    Log.d(TAG, "return");
-//                    ((BookReturnOpener)getActivity()).bookReturn(adapter.getBooks().get(taskPosition));
-//                }
           }
 
             @Override

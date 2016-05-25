@@ -19,7 +19,7 @@ public class Config {
 
     public static final String URL_RESERVE_BOOK = "book/reservation/{id}/user/{user}";
 
-    public static final String URL_RETURN_BOOK = "/book/return/id/{id}/user/{user}/place/{place}/rate/{rate}/rate_text/{ratetext}";
+    public static final String URL_RETURN_BOOK = "book/return/id/{id}/user/{user}/place/{place}/rate/{rate}/rate_text/{ratetext}";
 
     public static final String URL_ONE_BOOK_HISTORY = "book/history/{id}";
 
@@ -33,7 +33,6 @@ public class Config {
 
     public static final String URL_APIS_IMG = "book/image/#id";
 
-    public static final String URL_POSITIONS = "v1/filters/locality";
-
+    public static final String URL_POSITIONS = "filters/locality";
 
 }

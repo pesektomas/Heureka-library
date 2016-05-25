@@ -239,9 +239,8 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         Intent intent = new Intent(this, BookDetailAndResActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_BOOK_DETAIL, book);
-        bundle.putBoolean(BookDetailAndResActivity.KEY_CAN_RESERVE, true);
+        bundle.putBoolean(BookDetailAndResActivity.KEY_CAN_RESERVE, !isMyBook);
         bundle.putBoolean(BookDetailAndResActivity.MY_BOOK, isMyBook);
-        bundle.putBoolean(BookDetailAndResActivity.KEY_CAN_RESERVE, true);
         intent.putExtras(bundle);
 
         startActivity(intent);

@@ -79,7 +79,6 @@ String user = "tomas";
 
     @Bind(R.id.button)
     Button button1;
-
     @Bind(R.id.ratingBar)
     RatingBar ratingBar;
 

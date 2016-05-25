@@ -2,6 +2,7 @@ package heureka.cz.internal.library.rest;
 
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Api;
@@ -9,6 +10,7 @@ import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
+import heureka.cz.internal.library.repository.Position;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,7 +60,28 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
-                Log.w(TAG, t);
+                responseHandler.onFailure();
+            }
+        });
+    }
+
+
+    public void getPositions(final ResponseHandler responseHandler) {
+        Call<ArrayList<Position>> call = apiInterface.getPositions();
+
+
+        call.enqueue(new Callback<ArrayList<Position>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Position>> call, Response<ArrayList<Position>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Position>> call, Throwable t) {
                 responseHandler.onFailure();
             }
         });
@@ -69,7 +92,6 @@ public class ApiDescription {
         call.enqueue(new Callback<ArrayList<Book>>() {
             @Override
             public void onResponse(Call<ArrayList<Book>> call, Response<ArrayList<Book>> response) {
-                Log.d("TEST", response.message());
                 if (response.isSuccessful()) {
                     responseHandler.onResponse(response.body());
                 } else {
@@ -79,7 +101,6 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
-                Log.w("ApiDescription", t);
                 responseHandler.onFailure();
             }
         });
@@ -282,5 +303,4 @@ public class ApiDescription {
             }
         });
     }
-
 }

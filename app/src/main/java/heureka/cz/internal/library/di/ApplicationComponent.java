@@ -4,6 +4,7 @@ import heureka.cz.internal.library.gcm.RegistrationIntentService;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
+import heureka.cz.internal.library.ui.dialogs.RateDialog;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 import heureka.cz.internal.library.ui.fragments.BookDetailFragment;
@@ -40,6 +41,7 @@ public interface ApplicationComponent {
     // dialogs
     void inject(SearchDialog searchDialog);
     void inject(SettingsDialog settingsDialog);
+    void inject(RateDialog rateDialog);
 
     // services
     void inject(RegistrationIntentService registrationIntentService);

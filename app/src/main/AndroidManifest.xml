@@ -23,6 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".application.CodeCamp"
+
+
         >
 
         <meta-data android:name="AA_DB_NAME" android:value="code_camp.db" />
@@ -36,7 +38,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.BookReturnActivity" />
         <activity android:name=".ui.BookDetailAndResActivity" />
 
         <receiver

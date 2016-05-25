@@ -3,21 +3,16 @@ package heureka.cz.internal.library.ui.fragments;
 /**
  * Created by Ondrej on 6. 5. 2016.
  */
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,10 +39,19 @@ import heureka.cz.internal.library.rest.ApiDescription.ResponseHandler;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.adapters.AvailableRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.UsersRecyclerAdapter;
+import heureka.cz.internal.library.ui.dialogs.RateDialog;
+import retrofit2.Retrofit;
 
 public class BookDetailFragment extends Fragment {
 
 String user = "tomas";
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Get the view from fragment_book_detailk_detail.xml
+        View view = inflater.inflate(R.layout.activity_book_detail, container, false);
+        return view;
+    }
 
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
@@ -161,41 +165,16 @@ String user = "tomas";
     @OnClick(R.id.btn_return)
     void returnBook() {
         btnReturn.setEnabled(false);
-        //Intent intent = new Intent(activity, BookReturnActivity.class);
-        //  Long bookId = bookDetail.getId();
-        apiDescription.returnBook(bookDetail.getBookId(), user, "Praha", 5, "Ahoj", new ResponseHandler() {
-            @Override
-            public void onResponse(Object data) {
-                Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onFailure() {
-                btnBorrow.setEnabled(true);
-            }
-        });
+        Bundle args = new Bundle();
+        args.putInt("bookId", (int)bookDetail.getBookId());
+        RateDialog rateDialog= RateDialog.newInstance();
+        rateDialog.setArguments(args);
+        FragmentManager fm = getChildFragmentManager();
 
-
-//        BookReturnFragment nextFrag= new BookReturnFragment();
-//        this.getFragmentManager().beginTransaction()
-//                .replace(R.id.container, nextFrag,"TAG")
-//                .addToBackStack(null)
-//                .commit();
-        // intent.putExtra("BOOK_ID", bookId);
-        //startActivity(intent);
-
-//        apiDescription.returnBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
-//            @Override
-//            public void onResponse(Object data) {
-//                Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
-//            }
-
-//            @Override
-//            public void onFailure() {
-//                btnReturn.setEnabled(true);
-//            }
-//        });
-//
+        rateDialog.show(fm, "fragment_rate_dialog");
+        btnReturn.setEnabled(false);
+        getFragmentManager().popBackStackImmediate();
     }
 
     @OnClick(R.id.detail_link)
@@ -295,4 +274,7 @@ String user = "tomas";
 public Book getBook(){
     return bookDetail;
 }
+
+
+
 }

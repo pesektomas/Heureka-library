@@ -33,4 +33,7 @@ public class Config {
 
     public static final String URL_APIS_IMG = "book/image/#id";
 
+    public static final String URL_POSITIONS = "v1/filters/locality";
+
+
 }

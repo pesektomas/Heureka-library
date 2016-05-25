@@ -36,6 +36,10 @@
     <string name="download">Stáhnout</string>
     <string name="str_return">Vrátit</string>
     <string name="rate_and_return">Ohodnotit a vrátit</string>
+    <string name="spinner_title">Lokalita</string>
+    <string name="choose_locality">Místo vracení</string>
+    <string name="rate_book">Ohodnoťte knihu</string>
+    <string name="rate_words_book">Slovní hodnocení knihy</string>
 
 
 </resources>

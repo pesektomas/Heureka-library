@@ -1,5 +1,10 @@
 package heureka.cz.internal.library.rest.interfaces;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.helpers.Config;
@@ -8,6 +13,7 @@ import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
+import heureka.cz.internal.library.repository.Position;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -40,9 +46,13 @@ public interface ApiInterface {
     Call<Info> checkBorrowBook(@Path("id") Integer id, @Path("user") String user);
 
     @POST(Config.URL_RETURN_BOOK)
-    Call<Info> returnBook(@Path("id") Integer id, @Path("user") String user, @Path("place") String place, @Path("rate") int rate,@Path("ratetext") String rateText);
+    Call<Info> returnBook(@Path("id") int id, @Path("user") String user, @Path("place") String place, @Path("rate") float rate,@Path("ratetext") String rateText);
 
     @GET(Config.URL_ONE_BOOK_HISTORY)
+    Call<ArrayList<BookHolders>> oneBookHistory(@Path("code") String code);
+
+    @GET(Config.URL_POSITIONS)
+    Call<ArrayList<Position>> getPositions();
     Call<ArrayList<BookHolders>> oneBookHistory(@Path("id") Integer bookId);
 
 

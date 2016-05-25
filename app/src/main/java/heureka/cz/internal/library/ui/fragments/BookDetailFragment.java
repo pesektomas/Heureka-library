@@ -5,20 +5,26 @@ package heureka.cz.internal.library.ui.fragments;
  */
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.inject.Inject;
 
@@ -31,6 +37,7 @@ import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
+import heureka.cz.internal.library.repository.BookReservation;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
@@ -116,17 +123,40 @@ public class BookDetailFragment extends Fragment {
             return;
         }
 
-        apiDescription.borrowBook(bookCode, settings.get().getEmail(), new ApiDescription.ResponseHandler() {
+        apiDescription.checkBorrowBook(bookCode, settings.get().getEmail(), new ResponseHandler() {
             @Override
             public void onResponse(Object data) {
-                Snackbar.make(coordinator, ((Info)data).getInfo(), Snackbar.LENGTH_SHORT).show();
+                ArrayList<BookReservation> reservations = (ArrayList<BookReservation>)data;
+
+                if(reservations.isEmpty()) {
+                    doBorrow();
+                } else {
+                    Log.d("TEST", "show ask dialog...");
+                    new AlertDialog.Builder(getContext())
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setTitle(R.string.reservation_exist)
+                            .setMessage(R.string.reservation_exist_info)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    doBorrow();
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    btnBorrow.setEnabled(true);
+                                }
+                            })
+                            .show();
+                }
+
             }
 
             @Override
-            public void onFailure() {
-                btnBorrow.setEnabled(true);
-            }
+            public void onFailure() {}
         });
+
     }
 
     @OnClick(R.id.btn_reserve)
@@ -258,7 +288,22 @@ public class BookDetailFragment extends Fragment {
         UsersRecyclerAdapter adapterUsers = new UsersRecyclerAdapter(bookDetail.getHolders());
         detailUsers.setAdapter(adapterUsers);
     }
-public Book getBook(){
+
+    private void doBorrow() {
+        apiDescription.borrowBook(bookCode, settings.get().getEmail(), new ApiDescription.ResponseHandler() {
+            @Override
+            public void onResponse(Object data) {
+                Snackbar.make(coordinator, ((Info)data).getInfo(), Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure() {
+                btnBorrow.setEnabled(true);
+            }
+        });
+    }
+
+    public Book getBook(){
     return bookDetail;
 }
 

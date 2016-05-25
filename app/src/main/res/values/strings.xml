@@ -40,6 +40,10 @@
     <string name="choose_locality">Místo vracení</string>
     <string name="rate_book">Ohodnoťte knihu</string>
     <string name="rate_words_book">Slovní hodnocení knihy</string>
+    <string name="reservation_exist">Kniha je rezervovaná</string>
+    <string name="reservation_exist_info">Tuto knihu mají rezervovanou jiní uživatelé, opravdu si jí chcete vypůjčit?</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
 
 
 </resources>

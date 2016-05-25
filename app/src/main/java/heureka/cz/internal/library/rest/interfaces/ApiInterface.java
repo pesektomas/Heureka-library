@@ -11,6 +11,7 @@ import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.BookReservation;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.repository.Position;
@@ -43,7 +44,7 @@ public interface ApiInterface {
     Call<Info> borrowBook(@Path("code") String code, @Path("user") String user);
 
     @GET(Config.URL_BORROW_BOOK)
-    Call<Info> checkBorrowBook(@Path("id") Integer id, @Path("user") String user);
+    Call<ArrayList<BookReservation>> checkBorrowBook(@Path("code") String id, @Path("user") String user);
 
     @POST(Config.URL_RETURN_BOOK)
     Call<Info> returnBook(@Path("id") int id, @Path("user") String user, @Path("place") String place, @Path("rate") int rate, @Path("ratetext") String rateText);

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
+import heureka.cz.internal.library.repository.BookReservation;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.repository.Position;
@@ -141,6 +142,26 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<Book> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
+    public void checkBorrowBook(String code, String user, final ResponseHandler responseHandler) {
+        Call<ArrayList<BookReservation>> call = apiInterface.checkBorrowBook(code, user);
+
+        call.enqueue(new Callback<ArrayList<BookReservation>>() {
+            @Override
+            public void onResponse(Call<ArrayList<BookReservation>> call, Response<ArrayList<BookReservation>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<BookReservation>> call, Throwable t) {
                 responseHandler.onFailure();
             }
         });

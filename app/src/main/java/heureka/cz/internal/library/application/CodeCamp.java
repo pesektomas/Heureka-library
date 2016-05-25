@@ -7,6 +7,7 @@ import com.facebook.stetho.Stetho;
 
 import heureka.cz.internal.library.di.ApplicationComponent;
 import heureka.cz.internal.library.di.ApplicationModule;
+//import heureka.cz.internal.library.di.DaggerApplicationComponent;
 import heureka.cz.internal.library.di.DaggerApplicationComponent;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 

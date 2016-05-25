@@ -17,9 +17,11 @@ public class Config {
 
     public static final String URL_BORROW_BOOK = "/v1/book/borrow/{id}";
 
+    public static final String URL_POSITIONS = "v1/filters/locality";
+
     public static final String URL_RESERVE_BOOK = "/v1/book/reservation/{id}";
 
-    public static final String URL_RETURN_BOOK = "/v1/book/return/id/{id}/place/{place}";
+    public static final String URL_RETURN_BOOK = "/v1/book/return/id/{id}/user/{user}/place/{place}/rate/{rate}/rate_text/{ratetext}";
 
     public static final String URL_ONE_BOOK_HISTORY = "/v1/book/history/{code}";
 

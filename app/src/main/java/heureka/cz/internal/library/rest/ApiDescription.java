@@ -1,17 +1,12 @@
 package heureka.cz.internal.library.rest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
-import heureka.cz.internal.library.repository.Holder;
 import heureka.cz.internal.library.repository.Info;
+import heureka.cz.internal.library.repository.Position;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,6 +54,28 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<ArrayList<Book>> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
+
+    public void getPositions(final ResponseHandler responseHandler) {
+        Call<ArrayList<Position>> call = apiInterface.getPositions();
+
+
+        call.enqueue(new Callback<ArrayList<Position>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Position>> call, Response<ArrayList<Position>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Position>> call, Throwable t) {
                 responseHandler.onFailure();
             }
         });
@@ -163,8 +180,9 @@ public class ApiDescription {
         });
     }
 
-    public void returnBook(Integer bookId, String user, String place, int rate, String rateText,final ResponseHandler responseHandler) {
+    public void returnBook(int bookId, String user, String place, float rate, String rateText,final ResponseHandler responseHandler) {
         Call<Info> call = apiInterface.returnBook(bookId, user, place,rate, rateText);
+        System.out.println("BOOK ID"+bookId+"URL"+call.request().url().toString());
 
         call.enqueue(new Callback<Info>() {
             @Override

@@ -3,21 +3,16 @@ package heureka.cz.internal.library.ui.fragments;
 /**
  * Created by Ondrej on 6. 5. 2016.
  */
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +32,10 @@ import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.rest.ApiDescription.ResponseHandler;
-import heureka.cz.internal.library.ui.BookDetailActivity;
-import heureka.cz.internal.library.ui.BookReturnActivity;
 import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.adapters.AvailableRecyclerAdapter;
 import heureka.cz.internal.library.ui.adapters.UsersRecyclerAdapter;
+import heureka.cz.internal.library.ui.dialogs.RateDialog;
 import retrofit2.Retrofit;
 
 public class BookDetailFragment extends Fragment {
@@ -85,8 +79,7 @@ String user = "tomas";
 
 //    @Bind(R.id.toolbar)
 //    Toolbar toolbar;
-@Bind(R.id.ratingBar)
-RatingBar ratingBar;
+
 
     @Bind(R.id.detail_name)
     TextView detailName;
@@ -136,20 +129,28 @@ RatingBar ratingBar;
 
     @OnClick(R.id.btn_return)
     void returnBook() {
-        btnReturn.setEnabled(false);
+      //  btnReturn.setEnabled(false);
         //Intent intent = new Intent(activity, BookReturnActivity.class);
-      //  Long bookId = bookDetail.getId();
-        apiDescription.returnBook(bookDetail.getBookId(), user, "Praha", 5, "Ahoj", new ResponseHandler() {
-            @Override
-            public void onResponse(Object data) {
-                Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
-            }
+     // Long bookId = bookDetail.getId();
 
-            @Override
-            public void onFailure() {
-                btnBorrow.setEnabled(true);
-            }
-        });
+        Bundle args = new Bundle();
+        args.putInt("bookId", (int)bookDetail.getBookId());
+System.out.println("Passed ID" + bookDetail.getBookId());
+        RateDialog rateDialog= RateDialog.newInstance();
+        rateDialog.setArguments(args);
+        FragmentManager fm = getChildFragmentManager();
+
+        rateDialog.show(fm, "fragment_rate_dialog");
+        btnReturn.setEnabled(false);
+        getFragmentManager().popBackStackImmediate();
+       // FragmentManager fm = getActivity().getSupportFragmentManager();
+        //Bundle args = new Bundle();
+
+        //settingsDialog.setArguments(args);
+        //ettingsDialog.show(fm, "fragment_rate_dialog");
+
+
+
 
 
 //        BookReturnFragment nextFrag= new BookReturnFragment();
@@ -269,4 +270,7 @@ RatingBar ratingBar;
 public Book getBook(){
     return bookDetail;
 }
+
+
+
 }

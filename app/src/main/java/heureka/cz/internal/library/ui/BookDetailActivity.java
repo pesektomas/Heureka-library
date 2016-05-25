@@ -97,10 +97,7 @@ public class BookDetailActivity extends AppCompatActivity {
     @OnClick(R.id.btn_return)
     void returnBook() {
         btnReturn.setEnabled(false);
-        Intent intent = new Intent(this, BookReturnActivity.class);
-        Long bookId = bookDetail.getId();
-        intent.putExtra("BOOK_ID", bookId);
-        startActivity(intent);
+
 
 //        apiDescription.returnBook(bookDetail.getBookId(), new ApiDescription.ResponseHandler() {
 //            @Override

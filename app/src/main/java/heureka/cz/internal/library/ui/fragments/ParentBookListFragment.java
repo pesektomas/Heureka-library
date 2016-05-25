@@ -16,14 +16,9 @@ import heureka.cz.internal.library.ui.adapters.ViewPagerAdapterMain;
  * Created by Ondrej on 19. 5. 2016.
  */
 public class ParentBookListFragment extends Fragment {
-    //@Bind(R.id.pager3)
-    //;
 
 
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        System.out.println("PARENT ON CREATEVIEW");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parent, container, false);
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
 
@@ -34,15 +29,11 @@ public class ParentBookListFragment extends Fragment {
 
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        System.out.println("PARENT ON VIEXCREATED");
+
         ViewPager viewPager = (ViewPager)getView().findViewById(R.id.pager3);
         viewPager.setAdapter(null);
         viewPager.setAdapter(new ViewPagerAdapterMain(getActivity().getSupportFragmentManager()));
+
         getActivity().setTitle(R.string.tit_books);
-
-
     }
-
-
-
 }

@@ -2,9 +2,12 @@ package heureka.cz.internal.library.ui.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -70,13 +73,15 @@ public class HeurekaRecyclerAdapter extends RecyclerView.Adapter<HeurekaRecycler
         @Bind(R.id.heurekovinyDate)
         public TextView date;
 
-
+        @Bind(R.id.heurekoviny_button)
+        public Button downloadBtm;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-
+            downloadBtm.setOnClickListener(this);
+            downloadBtm.setOnLongClickListener(this);
         }
 
         @Override
@@ -95,9 +100,7 @@ public class HeurekaRecyclerAdapter extends RecyclerView.Adapter<HeurekaRecycler
         }
     }
 
-
     public interface OnTaskItemClickListener {
-        boolean onBackupClick(int taskPosition);
         void onItemClick(int taskPosition);
         void onItemLongClick(int taskPosition);
     }

@@ -1,8 +1,14 @@
 package heureka.cz.internal.library.ui.fragments;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -24,12 +31,16 @@ import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.services.DownloadService;
 import heureka.cz.internal.library.ui.adapters.HeurekaRecyclerAdapter;
 
 /**
  * Created by Ondrej on 18. 5. 2016.
  */
 public class HeurekovinyListFragment extends Fragment{
+
+    private static final int PERMISSION_REQUEST_CODE = 1;
+
     protected ApiDescription apiDescription;
 
     @Inject
@@ -45,6 +56,7 @@ public class HeurekovinyListFragment extends Fragment{
     RecyclerView recyclerView;
 
     protected HeurekaRecyclerAdapter adapter;
+
     public static final String TAG = "HeurekaListFragment";
 
     @Nullable
@@ -71,12 +83,10 @@ public class HeurekovinyListFragment extends Fragment{
 
 
     protected void callApi() {
-        System.out.println("callapiheurekoviny");
         apiDescription.getHeurekoviny(new ApiDescription.ResponseHandler() {
 
             @Override
             public void onResponse(Object data) {
-                Log.d(TAG, "load heurekoviny");
                 adapter.setData((ArrayList<Heurekoviny>) data);
             }
 
@@ -87,14 +97,29 @@ public class HeurekovinyListFragment extends Fragment{
         });
     }
 
-    private void initAdapter(ArrayList<Heurekoviny> heurekoviny) {
-        Log.d(TAG, "set adapter");
+    private void initAdapter(final ArrayList<Heurekoviny> heurekoviny) {
 
         if(getActivity() == null) {
             return;
         }
 
         adapter = new HeurekaRecyclerAdapter(heurekoviny, collectionUtils);
+
+        adapter.setListener(new HeurekaRecyclerAdapter.OnTaskItemClickListener() {
+
+            @Override
+            public void onItemClick(int taskPosition) {
+                if(checkPermission()){
+                    startDownload(adapter.getHeurekoviny().get(taskPosition).getId(), adapter.getHeurekoviny().get(taskPosition).getDate());
+                } else {
+                    // TODO info o tom, ze nema permission
+                }
+            }
+
+            @Override
+            public void onItemLongClick(int taskPosition) {}
+        });
+
         recyclerView.setAdapter(adapter);
 
 
@@ -103,4 +128,24 @@ public class HeurekovinyListFragment extends Fragment{
         return R.string.tit_books;
     }
 
+    private boolean checkPermission(){
+        int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void startDownload(String id, String date){
+        Log.d("TEST", "start service");
+
+        Bundle bundle = new Bundle();
+        bundle.putString(DownloadService.KEY_ID, id);
+        bundle.putString(DownloadService.KEY_NAME, "heurekoviny_"+date+".pdf");
+
+        Intent intent = new Intent(getContext(), DownloadService.class);
+        intent.putExtras(bundle);
+        getActivity().startService(intent);
+    }
 }

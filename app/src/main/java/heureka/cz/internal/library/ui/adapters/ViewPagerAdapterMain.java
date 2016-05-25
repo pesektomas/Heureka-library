@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import heureka.cz.internal.library.helpers.Download;
+import heureka.cz.internal.library.ui.MainActivity;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.HeurekovinyListFragment;
 
@@ -15,11 +17,11 @@ public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
 
     final int PAGE_COUNT = 2;
 
-
     // Tab Titles
     private String tabtitles[] = new String[] { "Seznam knih", "Heurékoviny" };
-    Context context;
 
+
+    private HeurekovinyListFragment heurekaList = new HeurekovinyListFragment();
     public ViewPagerAdapterMain(FragmentManager fm) {
 
         super(fm);
@@ -34,16 +36,11 @@ public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
 
-
             case 0:
-                System.out.println("CASE0-BOOKLIST");
                 BookListFragment bookList = new BookListFragment();
                 return bookList;
-
-
             case 1:
-                System.out.println("CASE1-HEUREKOVINY");
-                HeurekovinyListFragment heurekaList = new HeurekovinyListFragment();
+
                 return heurekaList;
         }
         return null;
@@ -57,4 +54,5 @@ public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabtitles[position];
     }
+
 }

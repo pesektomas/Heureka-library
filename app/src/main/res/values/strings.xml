@@ -44,6 +44,8 @@
     <string name="reservation_exist_info">Tuto knihu mají rezervovanou jiní uživatelé, opravdu si jí chcete vypůjčit?</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
+    <string name="downloading">Stahování ...</string>
+    <string name="downloaded">Soubor uložen do složky</string>
 
 
 </resources>

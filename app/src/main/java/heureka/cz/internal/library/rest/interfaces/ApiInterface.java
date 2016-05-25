@@ -1,10 +1,5 @@
 package heureka.cz.internal.library.rest.interfaces;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.helpers.Config;
@@ -15,10 +10,12 @@ import heureka.cz.internal.library.repository.BookReservation;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.repository.Position;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
 
 /**
  * Created by tomas on 26.4.16.
@@ -67,4 +64,11 @@ public interface ApiInterface {
     @POST(Config.URL_REGISTER_TOKEN)
     Call<Info> registerToken(@Path("email") String email, @Path("token") String token);
 
+    @GET(Config.URL_DOWNLOAD_BOOK)
+    @Streaming
+    Call<ResponseBody> downloadBook(@Path("id") Integer id);
+
+    @GET(Config.URL_DOWNLOAD_INTERNAL_BOOK)
+    @Streaming
+    Call<ResponseBody> downloadInternalBook(@Path("id") String id);
 }

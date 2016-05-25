@@ -1,11 +1,14 @@
 package heureka.cz.internal.library.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,6 +35,7 @@ import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.gcm.RegistrationIntentService;
 import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.Download;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Settings;
@@ -44,6 +48,8 @@ import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 
 public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
+
+    public static final String MESSAGE_PROGRESS = "message_progress";
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
@@ -67,6 +73,22 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
     private ApiDescription apiDescription;
 
     private ActionBarDrawerToggle drawerToggle;
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Download download = intent.getParcelableExtra("download");
+
+            // TODO update
+
+            /*mProgressBar.setProgress(download.getProgress());
+            if(download.getProgress() == 100){
+                mProgressText.setText("File Download Complete");
+            } else {
+                mProgressText.setText(String.format("Downloaded (%d/%d) MB",download.getCurrentFileSize(),download.getTotalFileSize()));
+            }*/
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +132,16 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
             createFragmentForActionId(R.id.nav_books);
         }
 
+        registerReceiver();
         initSettings();
+
+    }
+
+    private void registerReceiver(){
+        LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MESSAGE_PROGRESS);
+        bManager.registerReceiver(broadcastReceiver, intentFilter);
 
     }
 
@@ -168,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         switch (menuItem) {
             case R.id.nav_books:
                 //f = new BookListFragment();
-                f=new ParentBookListFragment();
+                f = new ParentBookListFragment();
                 break;
             case R.id.nav_my_books:
                 f = new MyBookListFragment();

@@ -46,6 +46,14 @@
     <string name="no">Ne</string>
     <string name="downloading">Stahování ...</string>
     <string name="downloaded">Soubor uložen do složky</string>
+    <string name="filter">Vyfiltrovat</string>
+    <string name="jazyk_cz">CZ</string>
+    <string name="jazyken">EN</string>
+    <string name="type_book">Papír</string>
+    <string name="type_ebook">E-Book</string>
+    <string name="type_audio">Audio</string>
+    <string name="jazyk">Jazyk: </string>
+    <string name="typ">Typ: </string>
 
 
 </resources>

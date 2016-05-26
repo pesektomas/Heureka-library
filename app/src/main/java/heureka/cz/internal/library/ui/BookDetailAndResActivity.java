@@ -3,6 +3,7 @@ package heureka.cz.internal.library.ui;
 /**
  * Created by Ondrej on 8. 5. 2016.
  */
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -33,6 +34,8 @@ public class BookDetailAndResActivity extends AppCompatActivity{
     @Bind(R.id.pager)
     ViewPager viewPager;
 
+
+
     private SearchDialog searchDialog = SearchDialog.newInstance();
 
     @Override
@@ -53,6 +56,8 @@ public class BookDetailAndResActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.filter);
+        item.setVisible(false);
         return true;
     }
 
@@ -75,7 +80,9 @@ public class BookDetailAndResActivity extends AppCompatActivity{
     private void setupToolbar() {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(true);
+
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
+
     }
 }

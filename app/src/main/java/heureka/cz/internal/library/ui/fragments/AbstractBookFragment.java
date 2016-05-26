@@ -62,6 +62,7 @@ public abstract class AbstractBookFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        System.out.println("ONVIEWCREATED ABSTR");
 
         if(getActivity() instanceof TitleSetter) {
             ((TitleSetter)getActivity()).setTitle(getTitle());
@@ -77,6 +78,10 @@ public abstract class AbstractBookFragment extends Fragment {
         }
     }
 
+    public void callSuper(final View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+    }
+
     protected abstract void callApi();
 
     protected abstract int getTitle();
@@ -85,7 +90,7 @@ public abstract class AbstractBookFragment extends Fragment {
         return false;
     }
 
-    private void initAdapter(ArrayList<Book> books) {
+    void initAdapter(ArrayList<Book> books) {
         Log.d(TAG, "set adapter");
 
         if(getActivity() == null) {

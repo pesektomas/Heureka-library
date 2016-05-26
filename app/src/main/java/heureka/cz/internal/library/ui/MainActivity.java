@@ -17,12 +17,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -36,9 +40,11 @@ import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.ui.dialogs.FilterDialog;
 import heureka.cz.internal.library.ui.dialogs.SearchDialog;
 import heureka.cz.internal.library.ui.dialogs.SettingsDialog;
 import heureka.cz.internal.library.ui.fragments.AbstractBookFragment;
+import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
@@ -51,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
     public static final String KEY_BOOK_DETAIL = "book_detail";
 
     private SearchDialog searchDialog = SearchDialog.newInstance();
+    private FilterDialog filterDialog = FilterDialog.newInstance();
+
+    ArrayList<Book> books = null;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -213,6 +222,10 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
                 FragmentManager fm = getSupportFragmentManager();
                 searchDialog.show(fm, "fragment_search_dialog");
                 break;
+            case R.id.filter:
+                FragmentManager fm2 = getSupportFragmentManager();
+                filterDialog.show(fm2, "fragment_filter_dialog");
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -246,9 +259,52 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         startActivity(intent);
     }
 
+boolean cz = true;
+    boolean en = true;
+    boolean ebook = true;
+    boolean book = true;
+    boolean audio = true;
+    public void filter(boolean cz, boolean en, boolean book, boolean ebook, boolean audio) {
+this.en = en;
+        this.cz = cz;
+        this.book = book;
+        this.ebook = ebook;
+        this.audio = audio;
+
+
+            FragmentManager fm2 = getSupportFragmentManager();
+            getSupportFragmentManager().beginTransaction().
+                    remove(getSupportFragmentManager().findFragmentByTag("fragment_filter_dialog")).commit();
+
+
+        Fragment f=new ParentBookListFragment();
+        removeOldFragments();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, f, f.getClass().getName())
+                .commit();
+    }
+
+    public HashMap<String,Boolean> getType(){
+        HashMap<String,Boolean> mapa = new HashMap<>();
+        mapa.put("cz",cz);
+        mapa.put("en",en);
+        mapa.put("ebook",ebook);
+        mapa.put("book",book);
+        mapa.put("audio",audio);
+        return mapa;
+    }
     @Override
     public void setTitle(int titleId) {
         getSupportActionBar().setTitle(titleId);
+    }
+
+    public void setBooks(ArrayList<Book> books){
+        this.books = books;
+    }
+
+    public ArrayList<Book> getBooks(){
+        return books;
     }
 
 }

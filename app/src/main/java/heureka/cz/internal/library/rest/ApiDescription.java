@@ -1,16 +1,15 @@
 package heureka.cz.internal.library.rest;
 
-import android.util.Log;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.BookReservation;
+import heureka.cz.internal.library.repository.Form;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
+import heureka.cz.internal.library.repository.Lang;
 import heureka.cz.internal.library.repository.Position;
 import heureka.cz.internal.library.rest.interfaces.ApiInterface;
 import retrofit2.Call;
@@ -307,7 +306,6 @@ public class ApiDescription {
 
     public void registerToken(String email, String token, final ResponseHandler responseHandler) {
         Call<Info> call = apiInterface.registerToken(email, token);
-
         call.enqueue(new Callback<Info>() {
             @Override
             public void onResponse(Call<Info> call, Response<Info> response) {
@@ -320,6 +318,44 @@ public class ApiDescription {
 
             @Override
             public void onFailure(Call<Info> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
+    public void getForms(final ResponseHandler responseHandler) {
+        Call<ArrayList<Form>> call = apiInterface.getForms();
+        call.enqueue(new Callback<ArrayList<Form>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Form>> call, Response<ArrayList<Form>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Form>> call, Throwable t) {
+                responseHandler.onFailure();
+            }
+        });
+    }
+
+    public void getLang(final ResponseHandler responseHandler) {
+        Call<ArrayList<Lang>> call = apiInterface.getLangs();
+        call.enqueue(new Callback<ArrayList<Lang>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Lang>> call, Response<ArrayList<Lang>> response) {
+                if (response.isSuccessful()) {
+                    responseHandler.onResponse(response.body());
+                } else {
+                    responseHandler.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Lang>> call, Throwable t) {
                 responseHandler.onFailure();
             }
         });

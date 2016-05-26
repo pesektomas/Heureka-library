@@ -7,8 +7,10 @@ import heureka.cz.internal.library.repository.Api;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.BookHolders;
 import heureka.cz.internal.library.repository.BookReservation;
+import heureka.cz.internal.library.repository.Form;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Info;
+import heureka.cz.internal.library.repository.Lang;
 import heureka.cz.internal.library.repository.Position;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -71,4 +73,10 @@ public interface ApiInterface {
     @GET(Config.URL_DOWNLOAD_INTERNAL_BOOK)
     @Streaming
     Call<ResponseBody> downloadInternalBook(@Path("id") String id);
+
+    @GET(Config.URL_LANG)
+    Call<ArrayList<Lang>> getLangs();
+
+    @GET(Config.URL_FORM)
+    Call<ArrayList<Form>> getForms();
 }

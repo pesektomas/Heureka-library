@@ -13,8 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -25,53 +29,52 @@ import eu.inmite.android.lib.validations.form.FormValidator;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
+import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.Filter;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
+import heureka.cz.internal.library.repository.Form;
+import heureka.cz.internal.library.repository.Lang;
+import heureka.cz.internal.library.repository.Position;
+import heureka.cz.internal.library.repository.Settings;
+import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.MainActivity;
 
 /**
  * Created by Ondrej on 25. 5. 2016.
  */
 public class FilterDialog extends DialogFragment {
+
     private static final String TAG = "FilterDialog";
 
-    private String code = "";
+    private ApiDescription apiDescription;
+
+    @Inject
+    Settings settings;
 
     @Inject
     RetrofitBuilder retrofitBuilder;
 
-    @Bind(R.id.chkCz)
-    CheckBox chCz;
+    @Bind(R.id.sp_lang)
+    Spinner lang;
 
-    @Bind(R.id.chkEn)
-    CheckBox chEn;
-
-    @Bind(R.id.chkBook)
-    CheckBox chBook;
-
-    @Bind(R.id.chkEbook)
-    CheckBox chEbook;
-
-    @Bind(R.id.chkAudioBook)
-    CheckBox chAudiobook;
-
-
-
-
+    @Bind(R.id.sp_type)
+    Spinner form;
 
     @OnClick(R.id.filterit)
-    void search() {
-        System.out.println("ON CLICK FILTER");
-
-
-        ((MainActivity)getActivity()).filter(chCz.isChecked(),chEn.isChecked(),chBook.isChecked(),chEbook.isChecked(),chAudiobook.isChecked());
-        //getActivity().getFragmentManager().popBackStack();
+    void filterit() {
         if(!FormValidator.validate(this, new SimpleErrorPopupCallback(getContext()))) {
             return;
         }
 
+        Filter filter = new Filter(
+                ((Lang)lang.getSelectedItem()),
+                ((Form)form.getSelectedItem())
+        );
 
-
-
+        if(getActivity() instanceof Filtered) {
+            ((Filtered)getActivity()).doFilter(filter);
+            getDialog().dismiss();
+        }
     }
 
     public FilterDialog() {
@@ -89,6 +92,7 @@ public class FilterDialog extends DialogFragment {
         ButterKnife.bind(this, view);
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
 
+        apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get().getApiAddress() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));
 
         return view;
     }
@@ -96,6 +100,39 @@ public class FilterDialog extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getDialog().setTitle(R.string.filter_title);
+
+        apiDescription.getLang(new ApiDescription.ResponseHandler() {
+            @Override
+            public void onResponse(Object data) {
+                ArrayList<Lang> dataAdapterList = new ArrayList<>();
+                dataAdapterList.add(new Lang(null, getString(R.string.all)));
+                dataAdapterList.addAll((ArrayList<Lang>) data);
+
+                ArrayAdapter<Lang> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dataAdapterList);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                lang.setAdapter(dataAdapter);
+            }
+
+            @Override
+            public void onFailure() {}
+        });
+
+        apiDescription.getForms(new ApiDescription.ResponseHandler() {
+            @Override
+            public void onResponse(Object data) {
+                ArrayList<Form> dataAdapterList = new ArrayList<>();
+                dataAdapterList.add(new Form(null, getString(R.string.all)));
+                dataAdapterList.addAll((ArrayList<Form>) data);
+
+                ArrayAdapter<Form> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, dataAdapterList);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                form.setAdapter(dataAdapter);
+            }
+
+            @Override
+            public void onFailure() {}
+        });
 
     }
 
@@ -117,8 +154,8 @@ public class FilterDialog extends DialogFragment {
         window.setGravity(Gravity.CENTER);
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public interface Filtered {
+        void doFilter(Filter filter);
     }
 
 }

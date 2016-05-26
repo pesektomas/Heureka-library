@@ -40,6 +40,7 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.gcm.RegistrationIntentService;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.Download;
+import heureka.cz.internal.library.helpers.Filter;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Settings;
@@ -53,7 +54,7 @@ import heureka.cz.internal.library.ui.fragments.MyBookListFragment;
 import heureka.cz.internal.library.ui.fragments.ParentBookListFragment;
 import heureka.cz.internal.library.ui.fragments.UserHistoryFragment;
 
-public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter {
+public class MainActivity extends AppCompatActivity implements AbstractBookFragment.BookDetailOpener, AbstractBookFragment.TitleSetter, FilterDialog.Filtered {
 
     public static final String MESSAGE_PROGRESS = "message_progress";
 
@@ -290,41 +291,18 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         startActivity(intent);
     }
 
-boolean cz = true;
-    boolean en = true;
-    boolean ebook = true;
-    boolean book = true;
-    boolean audio = true;
-    public void filter(boolean cz, boolean en, boolean book, boolean ebook, boolean audio) {
-this.en = en;
-        this.cz = cz;
-        this.book = book;
-        this.ebook = ebook;
-        this.audio = audio;
+    @Override
+    public void doFilter(Filter filter) {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
 
+        Log.d("TEST", "filter fragment start? " + f.getClass().getCanonicalName());
+        if (f instanceof FilterDialog.Filtered) {
+            Log.d("TEST", "filter fragment start!");
+            ((FilterDialog.Filtered) f).doFilter(filter);
+        }
 
-            FragmentManager fm2 = getSupportFragmentManager();
-            getSupportFragmentManager().beginTransaction().
-                    remove(getSupportFragmentManager().findFragmentByTag("fragment_filter_dialog")).commit();
-
-
-        Fragment f=new ParentBookListFragment();
-        removeOldFragments();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, f, f.getClass().getName())
-                .commit();
     }
 
-    public HashMap<String,Boolean> getType(){
-        HashMap<String,Boolean> mapa = new HashMap<>();
-        mapa.put("cz",cz);
-        mapa.put("en",en);
-        mapa.put("ebook",ebook);
-        mapa.put("book",book);
-        mapa.put("audio",audio);
-        return mapa;
-    }
     @Override
     public void setTitle(int titleId) {
         getSupportActionBar().setTitle(titleId);

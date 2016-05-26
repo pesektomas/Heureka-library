@@ -1,12 +1,10 @@
 package heureka.cz.internal.library.ui.adapters;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import heureka.cz.internal.library.helpers.Download;
-import heureka.cz.internal.library.ui.MainActivity;
+import heureka.cz.internal.library.helpers.Filter;
 import heureka.cz.internal.library.ui.fragments.BookListFragment;
 import heureka.cz.internal.library.ui.fragments.HeurekovinyListFragment;
 
@@ -22,6 +20,8 @@ public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
 
 
     private HeurekovinyListFragment heurekaList = new HeurekovinyListFragment();
+    private BookListFragment bookList = new BookListFragment();
+
     public ViewPagerAdapterMain(FragmentManager fm) {
 
         super(fm);
@@ -37,10 +37,8 @@ public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0:
-                BookListFragment bookList = new BookListFragment();
                 return bookList;
             case 1:
-
                 return heurekaList;
         }
         return null;
@@ -53,6 +51,10 @@ public class ViewPagerAdapterMain extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return tabtitles[position];
+    }
+
+    public void doFilter(Filter filter) {
+        bookList.doFilter(filter);
     }
 
 }

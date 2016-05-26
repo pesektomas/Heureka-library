@@ -35,6 +35,10 @@ public class Config {
 
     public static final String URL_POSITIONS = "filters/locality";
 
+    public static final String URL_FORM = "filters/form";
+
+    public static final String URL_LANG = "filters/lang";
+
     public static final String URL_DOWNLOAD_INTERNAL_BOOK = "book/internal-book/{id}";
 
     public static final String URL_DOWNLOAD_BOOK = "book/book/{id}";

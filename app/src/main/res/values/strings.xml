@@ -54,6 +54,8 @@
     <string name="type_audio">Audio</string>
     <string name="jazyk">Jazyk: </string>
     <string name="typ">Typ: </string>
+    <string name="filter_title">Filtr</string>
+    <string name="all">Vše</string>
 
 
 </resources>

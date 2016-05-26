@@ -16,28 +16,23 @@ import java.util.HashMap;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.Config;
+import heureka.cz.internal.library.helpers.Filter;
 import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.rest.ApiDescription;
 import heureka.cz.internal.library.ui.MainActivity;
-import heureka.cz.internal.library.ui.adapters.BookRecyclerAdapter;
+import heureka.cz.internal.library.ui.dialogs.FilterDialog;
 
 /**
  * Created by tomas on 6.4.16.
  */
-public class BookListFragment extends AbstractBookFragment {
+public class BookListFragment extends AbstractBookFragment implements FilterDialog.Filtered {
 
     ArrayList<Book> books = null;
-    boolean cz = true;
-    boolean en = true;
-    boolean book = true;
-    boolean ebook = true;
-    boolean audio = true;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        System.out.println("ONCREATEVIEW BLF");
         ((CodeCamp)getActivity().getApplication()).getApplicationComponent().inject(this);
         apiDescription = new ApiDescription(retrofitBuilder.provideRetrofit(settings.get() != null ? settings.get().getApiAddress() : Config.API_BASE_URL));
         return v;
@@ -45,17 +40,12 @@ public class BookListFragment extends AbstractBookFragment {
 
     @Override
     protected void callApi() {
-        ArrayList<Book> finalBooks = new ArrayList<Book>();
-        books = ((MainActivity) getActivity()).getBooks();
         if (books == null) {
             apiDescription.getBooks(new ApiDescription.ResponseHandler() {
                 @Override
                 public void onResponse(Object data) {
                     books = (ArrayList<Book>) data;
-
-
                     adapter.setData(books);
-                    ((MainActivity) getActivity()).setBooks(books);
                 }
 
                 @Override
@@ -64,27 +54,26 @@ public class BookListFragment extends AbstractBookFragment {
                 }
             });
         } else {
-            HashMap<String, Boolean> map = ((MainActivity) getActivity()).getType();
-            cz = map.get("cz");
-            en = map.get("en");
-            book = map.get("book");
-            ebook = map.get("ebook");
-            audio = map.get("audio");
-
-
-            for (int i = 0; i < books.size(); i++) {
-                if ((cz == true && books.get(i).getLang().equals("Cesky")) || (en == true && books.get(i).getLang().equals("Anglicky"))) {
-                    if ((book == true && books.get(i).getForm().equals("Papír")) || (ebook == true && books.get(i).getForm().equals("E-book")) || (audio == true && books.get(i).equals("Audio"))) {
-                        System.out.println("ADD BOOK TO LIST" + books.get(i).getName().toString());
-                        finalBooks.add(books.get(i));
-                    }
-                }
-            }
-            adapter.setData(finalBooks);
+            adapter.setData(books);
         }
     }
 
+    @Override
+    public void doFilter(Filter filter) {
+        ArrayList<Book> finalBooks = new ArrayList<Book>();
 
+        for (Book book : books) {
+
+            Log.d("TEST", "book: " +book.getLang() + ", filter: " + filter.getLang().getLang() + ": " + book.getLang().equals(filter.getLang().getLang()));
+            Log.d("TEST", "book: " +book.getForm() + ", filter: " + filter.getForm().getForm() + ": " + book.getForm().equals(filter.getForm().getForm()));
+
+            if ((filter.getLang().getLangShort() == null || book.getLang().equals(filter.getLang().getLang())) &&
+                            (filter.getForm().getFormShort() == null || book.getForm().equals(filter.getForm().getForm()))) {
+                finalBooks.add(book);
+            }
+        }
+        adapter.setData(finalBooks);
+    }
 
     @Override
     protected int getTitle() {

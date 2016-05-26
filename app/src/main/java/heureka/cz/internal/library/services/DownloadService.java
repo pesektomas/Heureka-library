@@ -29,8 +29,12 @@ import retrofit2.Retrofit;
 
 public class DownloadService extends IntentService {
 
+    public static final String TYPE_BOOK ="book";
+    public static final String TYPE_INTERNAL ="internal_book";
+
     public static final String KEY_ID = "book_id";
     public static final String KEY_NAME = "book_name";
+    public static final String KEY_TYPE = "book_type";
 
     public DownloadService() {
         super("Download Service");
@@ -42,6 +46,7 @@ public class DownloadService extends IntentService {
 
     private String bookId;
     private String bookName;
+    private String type;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -52,6 +57,7 @@ public class DownloadService extends IntentService {
 
         bookId = intent.getExtras().getString(KEY_ID);
         bookName = intent.getExtras().getString(KEY_NAME);
+        type = intent.getExtras().getString(KEY_TYPE);
 
         Log.d("TEST", "handle intent");
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -78,6 +84,11 @@ public class DownloadService extends IntentService {
         ApiInterface retrofitInterface = retrofit.create(ApiInterface.class);
 
         Call<ResponseBody> request = retrofitInterface.downloadInternalBook(bookId);
+        if(TYPE_BOOK.equals(type)) {
+            Log.d("TEST", Config.URL_DOWNLOAD_BOOK + ": " + bookId);
+            request = retrofitInterface.downloadBook(Integer.parseInt(bookId));
+        }
+
         try {
             downloadFile(request.execute().body());
         } catch (IOException e) {
@@ -149,7 +160,7 @@ public class DownloadService extends IntentService {
 
         notificationManager.cancel(0);
         notificationBuilder.setProgress(0,0,false);
-        notificationBuilder.setContentText(getResources().getText(R.string.downloaded) + Environment.DIRECTORY_DOWNLOADS);
+        notificationBuilder.setContentText(getResources().getText(R.string.downloaded) + " " + Environment.DIRECTORY_DOWNLOADS);
         notificationManager.notify(0, notificationBuilder.build());
 
     }

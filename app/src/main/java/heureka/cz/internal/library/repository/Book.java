@@ -27,6 +27,8 @@ public class Book implements Parcelable {
 
     private String form;
 
+    private String mime;
+
     private Integer total;
 
     @SerializedName(value="tags")
@@ -78,6 +80,14 @@ public class Book implements Parcelable {
         this.form = form;
     }
 
+    public String getMime() {
+        return mime;
+    }
+
+    public void setMime(String mime) {
+        this.mime = mime;
+    }
+
     public Integer getTotal() {
         return total;
     }
@@ -122,6 +132,7 @@ public class Book implements Parcelable {
         dest.writeString(this.detailLink);
         dest.writeString(this.lang);
         dest.writeString(this.form);
+        dest.writeString(this.mime);
         dest.writeValue(this.total);
         dest.writeTypedList(this.tags);
         dest.writeTypedList(holders);
@@ -137,6 +148,7 @@ public class Book implements Parcelable {
         this.detailLink = in.readString();
         this.lang = in.readString();
         this.form = in.readString();
+        this.mime = in.readString();
         this.total = (Integer) in.readValue(Integer.class.getClassLoader());
         this.tags = in.createTypedArrayList(Tag.CREATOR);
         this.holders = in.createTypedArrayList(Holder.CREATOR);
@@ -164,6 +176,7 @@ public class Book implements Parcelable {
                 ", detailLink='" + detailLink + '\'' +
                 ", lang='" + lang + '\'' +
                 ", form='" + form + '\'' +
+                ", mime=" + mime + '\'' +
                 ", total=" + total +
                 ", tags=" + tags +
                 ", holders=" + holders +

@@ -8,6 +8,13 @@
         app:showAsAction="ifRoom"/>
 
     <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:title="@string/share"
+        android:actionProviderClass="android.widget.ShareActionProvider"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:title="@string/search"

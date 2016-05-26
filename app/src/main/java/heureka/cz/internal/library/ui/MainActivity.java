@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         public void onReceive(Context context, Intent intent) {
             Download download = intent.getParcelableExtra("download");
 
-            // TODO update
+            // TODO update - ukazat nekde progress
 
             /*mProgressBar.setProgress(download.getProgress());
             if(download.getProgress() == 100){
@@ -208,7 +208,6 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
         Fragment f = null;
         switch (menuItem) {
             case R.id.nav_books:
-                //f = new BookListFragment();
                 f = new ParentBookListFragment();
                 break;
             case R.id.nav_my_books:
@@ -243,7 +242,10 @@ public class MainActivity extends AppCompatActivity implements AbstractBookFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.share);
+        item.setVisible(false);
         return true;
     }
 

@@ -56,6 +56,9 @@
     <string name="typ">Typ: </string>
     <string name="filter_title">Filtr</string>
     <string name="all">Vše</string>
+    <string name="share">Sdílet</string>
+    <string name="shareTitle">Super kniha</string>
+    <string name="shareVia">Sdílet pomocí</string>
 
 
 </resources>

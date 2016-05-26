@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.ui.fragments.BookDetailFragment;
 import heureka.cz.internal.library.ui.fragments.BookHistoryFragment;
 
@@ -52,5 +53,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return tabtitles[position];
+    }
+
+    public Book getBook() {
+        return detailKnihy.getBook();
     }
 }

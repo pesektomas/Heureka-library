@@ -24,7 +24,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -41,6 +43,7 @@ import heureka.cz.internal.library.repository.BookReservation;
 import heureka.cz.internal.library.repository.Info;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
+import heureka.cz.internal.library.services.DownloadService;
 import heureka.cz.internal.library.ui.BookDetailAndResActivity;
 import heureka.cz.internal.library.rest.ApiDescription.ResponseHandler;
 import heureka.cz.internal.library.ui.MainActivity;
@@ -50,6 +53,8 @@ import heureka.cz.internal.library.ui.dialogs.RateDialog;
 import retrofit2.Retrofit;
 
 public class BookDetailFragment extends Fragment {
+
+    private Map<String, String> mimes = new HashMap<>();
 
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
@@ -167,17 +172,29 @@ public class BookDetailFragment extends Fragment {
             return;
         }
 
-        apiDescription.reserveBook(bookDetail.getBookId(), settings.get().getEmail(), new ApiDescription.ResponseHandler() {
-            @Override
-            public void onResponse(Object data) {
-                Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
-            }
+        if(!"Papír".equals(bookDetail.getForm())) {
+            Bundle bundle = new Bundle();
+            bundle.putString(DownloadService.KEY_ID, ""+bookDetail.getBookId());
 
-            @Override
-            public void onFailure() {
-                btnBorrow.setEnabled(true);
-            }
-        });
+            bundle.putString(DownloadService.KEY_NAME, bookDetail.getName()+mimes.get(bookDetail.getMime()));
+            bundle.putString(DownloadService.KEY_TYPE, DownloadService.TYPE_BOOK);
+
+            Intent intent = new Intent(getContext(), DownloadService.class);
+            intent.putExtras(bundle);
+            getActivity().startService(intent);
+        } else {
+            apiDescription.reserveBook(bookDetail.getBookId(), settings.get().getEmail(), new ApiDescription.ResponseHandler() {
+                @Override
+                public void onResponse(Object data) {
+                    Snackbar.make(coordinator, ((Info) data).getInfo(), Snackbar.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure() {
+                    btnBorrow.setEnabled(true);
+                }
+            });
+        }
     }
 
     @OnClick(R.id.btn_return)
@@ -274,6 +291,12 @@ public class BookDetailFragment extends Fragment {
     }
 
     private void initBook() {
+
+        mimes.put("application/pdf", "pdf");
+        mimes.put("application/vnd.amazon.ebook", "kindle");
+        mimes.put("application/x-dtbook+xml", "epub");
+        mimes.put("audio/mpeg", "mp3");
+
         detailName.setText(bookDetail.getName());
         detailTags.setText(bookDetail.getTags().size() > 0 ? collectionUtils.implode(",", bookDetail.getTags()) : "");
         detailLang.setText(bookDetail.getLang());
@@ -287,6 +310,10 @@ public class BookDetailFragment extends Fragment {
         detailUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         UsersRecyclerAdapter adapterUsers = new UsersRecyclerAdapter(bookDetail.getHolders());
         detailUsers.setAdapter(adapterUsers);
+
+        if(!"Papír".equals(bookDetail.getForm())) {
+            btnReserve.setText(R.string.download);
+        }
     }
 
     private void doBorrow() {

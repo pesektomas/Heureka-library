@@ -3,7 +3,7 @@ package heureka.cz.internal.library.ui;
 /**
  * Created by Ondrej on 8. 5. 2016.
  */
-import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ShareActionProvider;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +25,6 @@ public class BookDetailAndResActivity extends AppCompatActivity{
 
     public static final String KEY_CAN_BORROW = "can_borrow";
     public static final String KEY_CAN_RESERVE = "can_reserve";
-    public static final String KEY_CAN_RETURN = "can_return";
     public static final String KEY_CODE = "code";
     public static final String MY_BOOK = "is_my_book";
 
@@ -34,9 +34,9 @@ public class BookDetailAndResActivity extends AppCompatActivity{
     @Bind(R.id.pager)
     ViewPager viewPager;
 
-
-
     private SearchDialog searchDialog = SearchDialog.newInstance();
+
+    private ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,8 @@ public class BookDetailAndResActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         setupToolbar();
 
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -68,8 +69,15 @@ public class BookDetailAndResActivity extends AppCompatActivity{
                 FragmentManager fm = getSupportFragmentManager();
                 searchDialog.show(fm, "fragment_search_dialog");
                 break;
+            case R.id.share:
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.shareTitle));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getBook().getName());
+
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.shareVia)));
+                break;
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
                 this.finish();
                 return true;
         }

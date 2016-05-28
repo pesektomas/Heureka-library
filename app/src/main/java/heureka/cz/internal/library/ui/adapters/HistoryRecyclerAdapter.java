@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -53,6 +55,13 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         final BookHolders bookHolder = holders.get(position);
         holder.name.setText(bookHolder.getName());
         holder.date.setText(bookHolder.getBorrowDate());
+
+        if(bookHolder.getTextRate()!=null){
+
+        }else{
+            //holder.textRate.setImageResource(R.drawable.common_google_signin_btn_text_dark);
+            holder.textRate.setVisibility(View.INVISIBLE);
+        }
         String star =bookHolder.getRate();
 
         if (star == null) {
@@ -102,16 +111,21 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         @Bind(R.id.historyDate)
         public TextView date;
 
+        @Bind(R.id.historyTextRate)
+        public ImageButton textRate;
+
         @Bind(R.id.historyRateStar)
         public ImageButton rate;
 
-
+        @Bind(R.id.clickHistory)
+        public LinearLayout detailClicable;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-
+            detailClicable.setOnClickListener(this);
+            detailClicable.setOnLongClickListener(this);
         }
 
         @Override

@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +29,7 @@ import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.CollectionUtils;
 import heureka.cz.internal.library.helpers.Config;
 import heureka.cz.internal.library.helpers.RetrofitBuilder;
+import heureka.cz.internal.library.repository.Book;
 import heureka.cz.internal.library.repository.Heurekoviny;
 import heureka.cz.internal.library.repository.Settings;
 import heureka.cz.internal.library.rest.ApiDescription;
@@ -54,6 +56,9 @@ public class HeurekovinyListFragment extends Fragment{
 
     @Bind(R.id.todo_list_view3)
     RecyclerView recyclerView;
+
+    @Bind(R.id.nejsou_heurekoviny)
+    TextView tv;
 
     protected HeurekaRecyclerAdapter adapter;
 
@@ -88,6 +93,14 @@ public class HeurekovinyListFragment extends Fragment{
             @Override
             public void onResponse(Object data) {
                 adapter.setData((ArrayList<Heurekoviny>) data);
+
+                if(((ArrayList<Heurekoviny>) data).size()==0){
+                    System.out.println("NOT ELSE");
+                    tv.setVisibility(View.VISIBLE);
+                }else{
+                    System.out.println("ELSE");
+                    tv.setVisibility(View.GONE);
+                }
             }
 
             @Override

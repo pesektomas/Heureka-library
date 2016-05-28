@@ -60,5 +60,11 @@
     <string name="shareTitle">Super kniha</string>
     <string name="shareVia">Sdílet pomocí</string>
 
+    <string name="pujceno">Půjčeno</string>
+    <string name="jmeno">Jméno</string>
+    <string name="hodnoceni">Hodnocení</string>
+    <string name="neni_historie">V historii nejsou žádná data</string>
+    <string name="zadna_data">Nejsou žádná data k zobrazení</string>
+
 
 </resources>

@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.Bind;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.Config;
@@ -28,6 +30,9 @@ import heureka.cz.internal.library.ui.dialogs.FilterDialog;
 public class BookListFragment extends AbstractBookFragment implements FilterDialog.Filtered {
 
     ArrayList<Book> books = null;
+
+    @Bind(R.id.nejsou_data)
+    TextView tv;
 
     @Nullable
     @Override
@@ -46,6 +51,13 @@ public class BookListFragment extends AbstractBookFragment implements FilterDial
                 public void onResponse(Object data) {
                     books = (ArrayList<Book>) data;
                     adapter.setData(books);
+                    if(((ArrayList<Book>) data).size()==0){
+                        System.out.println("NOT ELSE");
+                        tv.setVisibility(View.VISIBLE);
+                    }else{
+                        System.out.println("ELSE");
+                        tv.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override

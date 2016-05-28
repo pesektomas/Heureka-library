@@ -6,10 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import butterknife.Bind;
 import heureka.cz.internal.library.R;
 import heureka.cz.internal.library.application.CodeCamp;
 import heureka.cz.internal.library.helpers.Config;
@@ -24,6 +27,9 @@ public class MyBookListFragment extends AbstractBookFragment {
 
     @Inject
     Settings settings;
+
+    @Bind(R.id.nejsou_data)
+    TextView tv;
 
     @Nullable
     @Override
@@ -54,6 +60,13 @@ public class MyBookListFragment extends AbstractBookFragment {
                 Log.d(TAG, "load books");
 
                 adapter.setData((ArrayList<Book>) data);
+                if(((ArrayList<Book>) data).size()==0){
+                    System.out.println("NOT ELSE");
+                    tv.setVisibility(View.VISIBLE);
+                }else{
+                    System.out.println("ELSE");
+                    tv.setVisibility(View.GONE);
+                }
 
             }
 

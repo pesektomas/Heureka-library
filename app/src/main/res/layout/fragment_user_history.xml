@@ -8,6 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:id="@+id/nejsou_datauserhistory"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/zadna_data"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/todo_list_view"
         android:layout_width="match_parent"

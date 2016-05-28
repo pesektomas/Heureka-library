@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Jmeno"/>
+        android:text="@string/jmeno"/>
     <TextView
         android:layout_width="0dp"
         android:layout_weight="0.3"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Pujceno"/>
+        android:text="@string/pujceno"/>
     <TextView
         android:layout_width="0dp"
         android:layout_weight="0.3"
@@ -38,8 +38,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Hodnoceni"/>
+        android:text="@string/hodnoceni"/>
 </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:id="@+id/neni_history"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/neni_historie"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/todo_list_view2"
         android:layout_width="match_parent"

@@ -3,6 +3,8 @@ package heureka.cz.internal.library.ui.fragments;
 /**
  * Created by Ondrej on 6. 5. 2016.
  */
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -43,6 +47,9 @@ public class BookHistoryFragment extends Fragment {
 
     @Bind(R.id.todo_list_view2)
     RecyclerView recyclerView;
+
+    @Bind(R.id.neni_history)
+    TextView tv;
 
     protected ApiDescription apiDescription;
 
@@ -84,6 +91,13 @@ public class BookHistoryFragment extends Fragment {
                 Log.d(TAG, "load books");
 
                 ArrayList<BookHolders> list = (ArrayList<BookHolders>)data;
+if(((ArrayList<BookHolders>) data).size()==0){
+    System.out.println("NOT ELSE");
+tv.setVisibility(View.VISIBLE);
+}else{
+    System.out.println("ELSE");
+    tv.setVisibility(View.GONE);
+}
                 adapter.setData((ArrayList<BookHolders>) data);
 
             }
@@ -105,32 +119,59 @@ public class BookHistoryFragment extends Fragment {
         adapter = new HistoryRecyclerAdapter(holders, collectionUtils);
         recyclerView.setAdapter(adapter);
 
-//        adapter.setListener(new HistoryRecyclerAdapter.OnTaskItemClickListener() {
-//            @Override
-//            public void onItemClick(int taskPosition) {
-//                Log.d(TAG, "on click");
-//
-//
-//            }
-//
-//            @Override
-//            public void onItemLongClick(int taskPosition) {
-//                Log.d(TAG, "on long click");
-//            }
-//
-////            @Override
-////            public boolean onBackupClick(int taskPosition) {
-//////                Log.d(TAG, "backup click");
-//////                try {
-//////                    adapter.getBooks().get(taskPosition).setDbTags(collectionUtils.implode(",", adapter.getBooks().get(taskPosition).getTags()));
-//////                    adapter.getBooks().get(taskPosition).save();
-//////                    return true;
-//////                } catch (Exception e) {
-//////                    Log.w(TAG, e);
-//////                    return false;
-//////                }
-////            }
-//        });
+
+
+        adapter.setListener(new HistoryRecyclerAdapter.OnTaskItemClickListener() {
+            @Override
+            public void onItemClick(int taskPosition) {
+                Log.d(TAG, "on click");
+                System.out.println();
+                if(adapter.getHolders().get(taskPosition).getTextRate()!=null){
+                    zobrazDialog(adapter, taskPosition);
+                }
+
+            }
+
+            @Override
+            public void onItemLongClick(int taskPosition) {
+                Log.d(TAG, "on long click");
+            }
+
+            @Override
+            public boolean onBackupClick(int taskPosition) {
+                Log.d(TAG, "backup click");
+//                try {
+//                    adapter.getHolders().get(taskPosition).setDbTags(collectionUtils.implode(",", adapter.getHolders().get(taskPosition).getTags()));
+//                    adapter.getBooks().get(taskPosition).save();
+//                    return true;
+//                } catch (Exception e) {
+//                    Log.w(TAG, e);
+//                    return false;
+//                }
+return false;
+            }
+        });
     }
+
+public void zobrazDialog(HistoryRecyclerAdapter adapter, int position){
+    // 1. Instantiate an AlertDialog.Builder with its constructor
+    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+// 2. Chain together various setter methods to set the dialog characteristics
+    builder.setMessage(adapter.getHolders().get(position).getTextRate())
+    .setTitle(adapter.getHolders().get(position).getName());
+
+// 3. Get the AlertDialog from create()
+
+    builder.setPositiveButton("Zavřít", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+            // User clicked OK button
+        }
+    });
+    AlertDialog dialog = builder.create();
+    dialog.show();
+}
+
+
 
 }

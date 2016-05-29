@@ -35,6 +35,8 @@ public abstract class AbstractBookFragment extends Fragment {
     @Bind(R.id.todo_list_view)
     RecyclerView recyclerView;
 
+
+
     @Inject
     RetrofitBuilder retrofitBuilder;
 
